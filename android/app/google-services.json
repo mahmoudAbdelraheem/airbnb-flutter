@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "908654182860",
+    "project_id": "iti-airbnb",
+    "storage_bucket": "iti-airbnb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908654182860:android:0b7d53d1c9d1302ae31d69",
+        "android_client_info": {
+          "package_name": "com.example.airbnb_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908654182860-aiosger59hrjgvf77gveh4552en0s70p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoygGoc8Qk5TzBagO1QYNxxa7Q3oSUkIk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908654182860-aiosger59hrjgvf77gveh4552en0s70p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

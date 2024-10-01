@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"iti-airbnb","appId":"1:908654182860:android:0b7d53d1c9d1302ae31d69","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"iti-airbnb","configurations":{"android":"1:908654182860:android:0b7d53d1c9d1302ae31d69","ios":"1:908654182860:ios:17de3528c662e59ce31d69"}}}}}}

@@ -1,8 +1,15 @@
 import 'package:airbnb_flutter/app_routes.dart';
+import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(Airbnb());
 }
 
@@ -19,6 +26,7 @@ class Airbnb extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       onGenerateRoute: (settings) => AppRoutes.generateRoute(settings),
+      initialRoute: AppConstants.homeScreen,
     );
   }
 }
