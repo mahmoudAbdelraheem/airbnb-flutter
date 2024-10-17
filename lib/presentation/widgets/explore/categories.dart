@@ -1,8 +1,11 @@
+import 'package:airbnb_flutter/data/models/category_model.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/category.dart';
 import 'package:flutter/material.dart';
 
 class Categoties extends StatelessWidget {
+  final List<CategoryModel> categoties;
   const Categoties({
+    required this.categoties,
     super.key,
   });
 
@@ -11,9 +14,11 @@ class Categoties extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: 10,
+          itemCount: categoties.length,
           itemBuilder: (_, index) {
-            return const Category();
+            return Category(
+              category: categoties[index],
+            );
           }),
     );
   }

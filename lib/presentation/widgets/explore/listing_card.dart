@@ -1,8 +1,11 @@
+import 'package:airbnb_flutter/data/models/listing_model.dart';
 import 'package:flutter/material.dart';
 
 class ListingCard extends StatefulWidget {
+  final ListingModel listing;
   const ListingCard({
     super.key,
+    required this.listing,
   });
 
   @override
@@ -48,10 +51,10 @@ class _ListingCardState extends State<ListingCard> {
                     itemCount: 5,
                     itemBuilder: (_, pageIndex) {
                       return Container(
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           image: DecorationImage(
                             image: NetworkImage(
-                              'https://picsum.photos/seed/picsum/200/300',
+                              widget.listing.imageSrc[pageIndex],
                             ),
                             fit: BoxFit.cover, // Fit the image properly
                           ),
@@ -80,7 +83,7 @@ class _ListingCardState extends State<ListingCard> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ...List.generate(
-                          5, //TODO: to be the number images
+                          widget.listing.imageSrc.length,
                           (index) {
                             return AnimatedContainer(
                               duration: const Duration(milliseconds: 300),
@@ -106,31 +109,31 @@ class _ListingCardState extends State<ListingCard> {
               ),
             ),
           ),
-          const Text(
-            "title",
-            style: TextStyle(
+          Text(
+            widget.listing.title,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
-          const Text(
-            "location",
-            style: TextStyle(
+          Text(
+            widget.listing.location,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
           ),
           RichText(
-            text: const TextSpan(
+            text: TextSpan(
               children: [
                 TextSpan(
-                  text: "33\$ ",
-                  style: TextStyle(
+                  text: "${widget.listing.price}\$ ",
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                   ),
                 ),
-                TextSpan(
+                const TextSpan(
                   text: "per night",
                   style: TextStyle(
                     color: Colors.black,
