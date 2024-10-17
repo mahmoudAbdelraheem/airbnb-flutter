@@ -1,10 +1,13 @@
+import 'package:airbnb_flutter/data/models/category_model.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/categories.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/search.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
+  final List<CategoryModel> categoties;
   const NavBar({
     super.key,
+    required this.categoties,
   });
 
   @override
@@ -23,7 +26,7 @@ class NavBar extends StatelessWidget {
       child: Column(
         children: [
           Search(onPressed: () {}),
-          const Categoties(),
+          Categoties(categoties: categoties),
         ],
       ),
     );

@@ -1,7 +1,10 @@
+import 'package:airbnb_flutter/data/models/category_model.dart';
 import 'package:flutter/material.dart';
 
 class Category extends StatelessWidget {
+  final CategoryModel category;
   const Category({
+    required this.category,
     super.key,
   });
 
@@ -19,16 +22,16 @@ class Category extends StatelessWidget {
       //         ),
       //       )
       //     : null),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.location_on_outlined,
             size: 30,
           ),
-          Text('Location'),
+          Text(category.label),
         ],
       ),
     );
