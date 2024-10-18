@@ -1,4 +1,5 @@
 import 'package:airbnb_flutter/data/models/listing_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ListingCard extends StatefulWidget {
@@ -53,7 +54,7 @@ class _ListingCardState extends State<ListingCard> {
                       return Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
+                            image: CachedNetworkImageProvider(
                               widget.listing.imageSrc[pageIndex],
                             ),
                             fit: BoxFit.cover, // Fit the image properly

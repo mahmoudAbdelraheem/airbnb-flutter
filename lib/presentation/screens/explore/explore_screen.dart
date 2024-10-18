@@ -23,7 +23,7 @@ class ExploreScreen extends StatelessWidget {
             state is GetListingsAndCategoriesSuccessState
                 ? NavBar(categoties: state.categories)
                 : state is GetListingsAndCategoriesLoadingState
-                    ? const Loading()
+                    ? const SizedBox(height: 150, child: Loading())
                     : const SizedBox(),
             state is GetListingsAndCategoriesSuccessState
                 ? Expanded(
@@ -37,7 +37,7 @@ class ExploreScreen extends StatelessWidget {
                     ),
                   )
                 : State is GetListingsAndCategoriesLoadingState
-                    ? const Loading()
+                    ? const Expanded(child: SizedBox(child: Loading()))
                     : const SizedBox(),
           ]);
         },

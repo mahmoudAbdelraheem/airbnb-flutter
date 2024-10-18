@@ -42,24 +42,35 @@ class ListingModel {
   // Convert from JSON
   factory ListingModel.fromJson(Map<String, dynamic> json) {
     return ListingModel(
-      approved: json['approved'],
-      bathroomCount: json['bathroomCount'],
-      category: json['category'],
-      createdAt: json['createdAt'],
-      description: json['description'],
-      descriptionAr: json['descriptionAr'],
-      guestCount: json['guestCount'],
-      id: json['id'],
-      imageSrc: List<String>.from(json['imageSrc']),
-      location: json['location'],
-      locationAr: json['locationAr'],
-      mapLocation: List<String>.from(json['mapLocation']),
-      price: json['price'].toDouble(),
-      region: json['region'],
-      roomCount: json['roomCount'],
-      title: json['title'],
-      titleAr: json['titleAr'],
-      userId: json['userId'],
+      approved: json['approved'] ?? false, // Handling null with fallback
+      bathroomCount: json['bathroomCount'] is int
+          ? json['bathroomCount']
+          : int.parse(json['bathroomCount'].toString()),
+      category: json['category'] ?? '', // Add default values if necessary
+      createdAt: json['createdAt'] ?? '',
+      description: json['description'] ?? '',
+      descriptionAr: json['descriptionAr'] ?? '',
+      guestCount: json['guestCount'] is int
+          ? json['guestCount']
+          : int.parse(json['guestCount'].toString()),
+      id: json['id'] ?? '',
+      imageSrc:
+          List<String>.from(json['imageSrc'] ?? []), // Handle missing lists
+      location: json['location'] ?? '',
+      locationAr: json['locationAr'] ?? '',
+      mapLocation: json['mapLocation'] != null
+          ? List<String>.from(json['mapLocation'].map((e) => e.toString()))
+          : [],
+      price: json['price'] is double
+          ? json['price']
+          : double.parse(json['price'].toString()),
+      region: json['region'] ?? '',
+      roomCount: json['roomCount'] is int
+          ? json['roomCount']
+          : int.parse(json['roomCount'].toString()),
+      title: json['title'] ?? '',
+      titleAr: json['titleAr'] ?? '',
+      userId: json['userId'] ?? '',
     );
   }
 
