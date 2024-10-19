@@ -1,4 +1,6 @@
+import 'package:airbnb_flutter/core/widgets/loading.dart';
 import 'package:airbnb_flutter/data/models/category_model.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
 class Category extends StatelessWidget {
@@ -27,9 +29,17 @@ class Category extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.location_on_outlined,
-            size: 30,
+          SvgPicture.network(
+            category.image,
+            width: 30,
+            height: 30,
+            fit: BoxFit.contain,
+            colorFilter: const ColorFilter.mode(
+              // Colors.grey.shade700,
+              Colors.black,
+              BlendMode.srcIn,
+            ),
+            placeholderBuilder: (context) => const Loading(),
           ),
           Text(category.label),
         ],
