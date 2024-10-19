@@ -4,11 +4,12 @@ import 'package:latlong2/latlong.dart';
 
 class ListingMap extends StatelessWidget {
   final LatLng currentLocation;
-  // final void Function(TapPosition, LatLng)? onMapTap;
+  final bool flat; // Control interaction through this flag
+
   const ListingMap({
     super.key,
     required this.currentLocation,
-    // required this.onMapTap,
+    required this.flat, // Add flat to constructor
   });
 
   @override
@@ -17,10 +18,11 @@ class ListingMap extends StatelessWidget {
       children: [
         FlutterMap(
           options: MapOptions(
-            initialCenter: currentLocation,
-            initialZoom: 5.0,
-            // onTap: onMapTap,
-          ),
+              initialCenter: currentLocation,
+              initialZoom: 9.0,
+              interactionOptions: InteractionOptions(
+                flags: flat ? InteractiveFlag.all : InteractiveFlag.none,
+              )),
           children: [
             TileLayer(
               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -29,13 +31,21 @@ class ListingMap extends StatelessWidget {
             MarkerLayer(
               markers: [
                 Marker(
-                  width: 80.0,
-                  height: 80.0,
+                  width: 30.0,
+                  height: 30.0,
                   point: currentLocation,
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.pink[500],
-                    size: 30,
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Colors.pink[500],
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.home,
+                      color: Colors.white,
+                      size: 20.0,
+                    ),
                   ),
                 ),
               ],
