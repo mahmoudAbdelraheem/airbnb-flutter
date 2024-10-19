@@ -19,6 +19,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6
+  flutter_date_pickers: ^0.4.3
   flutter_map: ^7.0.2
   flutter_svg: ^2.0.10+1
   get_it: ^8.0.0
