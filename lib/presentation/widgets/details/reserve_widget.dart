@@ -1,10 +1,13 @@
+import 'package:airbnb_flutter/core/functions/show_bottom_sheet_modal.dart';
 import 'package:airbnb_flutter/core/widgets/custom_button.dart';
 import 'package:airbnb_flutter/data/models/listing_model.dart';
+import 'package:airbnb_flutter/presentation/widgets/details/reserve_sheet_modal_child.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class ReserveWidget extends StatelessWidget {
   final ListingModel listing;
+
   const ReserveWidget({
     super.key,
     required this.listing,
@@ -14,6 +17,7 @@ class ReserveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('MMM - dd').format(now);
+    final Size screenSize = MediaQuery.sizeOf(context);
     return Container(
       width: double.infinity,
       height: 70,
@@ -55,11 +59,22 @@ class ReserveWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                formattedDate,
-                style: const TextStyle(
-                  decoration: TextDecoration.underline,
-                  height: 1.2,
+              GestureDetector(
+                onTap: () {
+                  // Use the scaffold key to open the bottom sheet
+                  showBottomSheetModal(
+                    context: context,
+                    screenSize: screenSize,
+                    child: const ReserveSheetModalChild(),
+                  );
+                },
+                child: Text(
+                  formattedDate,
+                  style: const TextStyle(
+                    decoration: TextDecoration.underline,
+                    color: Colors.black,
+                    height: 1.2,
+                  ),
                 ),
               ),
             ],
@@ -67,7 +82,9 @@ class ReserveWidget extends StatelessWidget {
           CustomButton(
             text: 'Reserve',
             width: 150,
-            onTap: () {},
+            onTap: () {
+              // Add your reserve logic here
+            },
           ),
         ],
       ),

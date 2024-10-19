@@ -1,10 +1,9 @@
 import 'package:airbnb_flutter/data/models/listing_model.dart';
+import 'package:airbnb_flutter/presentation/widgets/details/details_map_widget.dart';
 import 'package:airbnb_flutter/presentation/widgets/details/host_card.dart';
 import 'package:airbnb_flutter/presentation/widgets/details/listing_details_images.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/listing_map.dart';
 import 'package:airbnb_flutter/presentation/widgets/details/reserve_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 
 class DetailsScreen extends StatefulWidget {
   final ListingModel listing;
@@ -15,11 +14,15 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // key: scaffoldKey,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: ReserveWidget(listing: widget.listing),
+      floatingActionButton: ReserveWidget(
+        listing: widget.listing,
+      ),
       body: ListView(
         children: [
           ListingDetailsImages(listing: widget.listing),
@@ -85,21 +88,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ],
             ),
           ),
-          Container(
-            height: 250,
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: ListingMap(
-                currentLocation: LatLng(
-                  double.parse(widget.listing.mapLocation[0]),
-                  double.parse(
-                    widget.listing.mapLocation[1],
-                  ),
-                ),
-              ),
-            ),
+          DetailsMapWidget(
+            listingLocation: widget.listing.mapLocation,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
