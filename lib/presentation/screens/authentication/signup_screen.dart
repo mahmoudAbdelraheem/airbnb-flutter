@@ -101,7 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RoundTextField(
                   textEditingController: _firstNameController,
                   hintText: 'Enter your first name',
-                  icon: "assets/images/person_icon",
+                  icon: "assets/images/person_icon.png",
                   textInputType: TextInputType.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -116,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RoundTextField(
                   textEditingController: _lastNameController,
                   hintText: 'Enter your last name',
-                  icon: "assets/images/person_icon",
+                  icon: "assets/images/person_icon.png",
                   textInputType: TextInputType.name,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
