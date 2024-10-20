@@ -2,22 +2,26 @@ import 'package:airbnb_flutter/data/datasource/explore/get_categories_remote_dat
 import 'package:airbnb_flutter/data/datasource/explore/get_listings_remote_datasource.dart';
 import 'package:airbnb_flutter/firebase_options.dart';
 import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
+import 'package:airbnb_flutter/logic/home/home_bloc.dart';
 import 'package:airbnb_flutter/repositories/explore/get_categories_repository.dart';
 import 'package:airbnb_flutter/repositories/explore/get_listing_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependancies() async {
-  //! explore page dependancies
-  _initExplore();
-
   //! Firebase initialization
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+//! home page dependancies
+  _homeBloc();
+
+  //! explore page dependancies
+  _initExplore();
 }
 
 void _initExplore() {
@@ -48,6 +52,17 @@ void _initExplore() {
     () => ExploreBloc(
       listingsRepository: serviceLocator(),
       categoriesRepository: serviceLocator(),
+    ),
+  );
+}
+
+void _homeBloc() {
+  // Register FirebaseAuth
+  serviceLocator.registerLazySingleton(() => FirebaseAuth.instance);
+  // Register AuthCubit
+  serviceLocator.registerLazySingleton(
+    () => HomeBloc(
+      firebaseAuth: serviceLocator<FirebaseAuth>(),
     ),
   );
 }

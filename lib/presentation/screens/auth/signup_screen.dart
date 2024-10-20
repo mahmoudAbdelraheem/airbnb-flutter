@@ -1,42 +1,47 @@
-import 'package:airbnb_flutter/presentation/screens/authentication/signup_screen.dart';
-import 'package:airbnb_flutter/presentation/screens/home_screen.dart';
-import 'package:airbnb_flutter/presentation/widgets/round_gradient_button.dart';
-import 'package:airbnb_flutter/presentation/widgets/round_text_field.dart';
-import 'package:airbnb_flutter/utils/app_colors.dart';
+import 'package:airbnb_flutter/presentation/screens/auth/login_screen.dart';
+import 'package:airbnb_flutter/presentation/widgets/auth/round_gradient_button.dart';
+import 'package:airbnb_flutter/presentation/widgets/auth/round_text_field.dart';
+import 'package:airbnb_flutter/core/constants/app_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final CollectionReference _users =
+      FirebaseFirestore.instance.collection('users');
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   bool _isObscure = true;
+  bool _isCheck = false;
   final _formKey = GlobalKey<FormState>();
 
-  Future<User?> _signIn(
-      BuildContext context, String email, String password) async {
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+  // Future<User?> _signIn(
+  //     BuildContext context, String email, String password) async {
+  //   try {
+  //     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+  //         email: email, password: password);
 
-      User? user = userCredential.user;
+  //     User? user = userCredential.user;
 
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-      return user;
-    } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Invalid email or password!')));
-      return null;
-    }
-  }
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (context) => HomeScreen()));
+  //     return user;
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context)
+  //         .showSnackBar(SnackBar(content: Text('Invalid email or password!')));
+  //     return null;
+  //   }
+  // }
 
   @override
   void initState() {
@@ -51,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
           child: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
           child: Form(
             key: _formKey,
             child: Column(
@@ -68,8 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: media.width * 0.03,
                       ),
-                      Text(
-                        'Hello!',
+                      const Text(
+                        'Hello Hello!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: AppColors.blackColor,
@@ -79,8 +84,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: media.width * 0.01,
                       ),
-                      Text(
-                        'Welcome back!',
+                      const Text(
+                        'Create a new account',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: AppColors.blackColor,
@@ -91,7 +96,37 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: media.width * 0.1,
+                  height: media.width * 0.02,
+                ),
+                RoundTextField(
+                  textEditingController: _firstNameController,
+                  hintText: 'Enter your first name',
+                  icon: "assets/images/person_icon.png",
+                  textInputType: TextInputType.name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your first name';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: media.width * 0.02,
+                ),
+                RoundTextField(
+                  textEditingController: _lastNameController,
+                  hintText: 'Enter your last name',
+                  icon: "assets/images/person_icon.png",
+                  textInputType: TextInputType.name,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
+                    }
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  height: media.width * 0.02,
                 ),
                 RoundTextField(
                   textEditingController: _emailController,
@@ -106,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                 ),
                 SizedBox(
-                  height: media.width * 0.05,
+                  height: media.width * 0.02,
                 ),
                 RoundTextField(
                   textEditingController: _passController,
@@ -144,11 +179,37 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: media.width * 0.02,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _isCheck = !_isCheck;
+                          });
+                        },
+                        icon: Icon(
+                          _isCheck
+                              ? Icons.check_box_outlined
+                              : Icons.check_box_outline_blank,
+                          color: AppColors.grayColor,
+                        )),
+                    const Expanded(
+                        child: Text(
+                      'Agree to terms and services',
+                      style:
+                          TextStyle(color: AppColors.grayColor, fontSize: 10),
+                    ))
+                  ],
+                ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
                       onPressed: () {},
-                      child: Text(
+                      child: const Text(
                         'Forgot your password?',
                         style: TextStyle(
                             color: AppColors.secondaryColor1,
@@ -157,14 +218,40 @@ class _LoginScreenState extends State<LoginScreen> {
                       )),
                 ),
                 SizedBox(
-                  height: media.width * 0.1,
+                  height: media.width * 0.05,
                 ),
                 RoundGradientButton(
-                    title: 'Login',
-                    onPressed: () {
+                    title: 'Register',
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        _signIn(context, _emailController.text,
-                            _passController.text);
+                        if (_isCheck) {
+                          try {
+                            UserCredential userCredential =
+                                await _auth.createUserWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passController.text);
+
+                            String uid = userCredential.user!.uid;
+
+                            await _users.doc(uid).set({
+                              'firstName': _firstNameController.text,
+                              'lastName': _lastNameController.text,
+                              'email': _emailController.text,
+                            });
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Successfully Registered!')));
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                          }
+                        }
                       }
                     }),
                 SizedBox(
@@ -179,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: AppColors.grayColor.withOpacity(0.5),
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Or',
                       style: TextStyle(
                         color: AppColors.grayColor,
@@ -218,7 +305,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'assets/images/google_icon.png',
                           )),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 30,
                     ),
                     GestureDetector(
@@ -247,19 +334,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SignUpScreen()));
+                              builder: (context) => const LoginScreen()));
                     },
                     child: RichText(
                       textAlign: TextAlign.center,
-                      text: TextSpan(
+                      text: const TextSpan(
                           style: TextStyle(
                               color: AppColors.blackColor,
                               fontSize: 16,
                               fontWeight: FontWeight.w400),
                           children: [
-                            TextSpan(text: 'New user?'),
+                            TextSpan(text: 'Already have an account?'),
                             TextSpan(
-                                text: 'Register',
+                                text: 'Sign in',
                                 style: TextStyle(
                                     color: AppColors.secondaryColor1,
                                     fontSize: 16,

@@ -1,4 +1,4 @@
-import 'package:airbnb_flutter/utils/app_colors.dart';
+import 'package:airbnb_flutter/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class RoundTextField extends StatelessWidget {
@@ -35,7 +35,8 @@ class RoundTextField extends StatelessWidget {
         obscureText: isObsecureText,
         onChanged: onChanged,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           enabledBorder: InputBorder.none,
           focusedBorder: InputBorder.none,
           hintText: hintText,
@@ -52,7 +53,7 @@ class RoundTextField extends StatelessWidget {
             ),
           ),
           suffixIcon: rightIcon,
-          hintStyle: TextStyle(fontSize: 12, color: AppColors.grayColor),
+          hintStyle: const TextStyle(fontSize: 12, color: AppColors.grayColor),
         ),
         validator: validator,
       ),
