@@ -1,9 +1,7 @@
-import 'package:airbnb_flutter/presentation/screens/auth/signup_screen.dart';
-import 'package:airbnb_flutter/presentation/screens/home_screen.dart';
-import 'package:airbnb_flutter/presentation/widgets/auth/round_gradient_button.dart';
-import 'package:airbnb_flutter/presentation/widgets/auth/round_text_field.dart';
-import 'package:airbnb_flutter/core/constants/app_colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:airbnb_flutter/core/constants/app_constants.dart';
+import 'package:airbnb_flutter/core/widgets/custom_button.dart';
+import 'package:airbnb_flutter/core/widgets/custom_text_form_field.dart';
+import 'package:airbnb_flutter/presentation/widgets/auth/custom_auth_button.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -14,249 +12,146 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passController = TextEditingController();
-  bool _isObscure = true;
+  bool _isObscure = false;
   final _formKey = GlobalKey<FormState>();
-
-  Future<User?> _signIn(
-      BuildContext context, String email, String password) async {
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
-
-      User? user = userCredential.user;
-
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-      return user;
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Invalid email or password!')));
-      return null;
-    }
-  }
-
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
-  void initState() {
-    super.initState();
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var media = MediaQuery.of(context).size;
+    final Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Form(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(20).copyWith(top: 50),
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: const Icon(Icons.close),
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Log in or sign up to Airbnb',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 30),
+            CustomTextFormField(
+              sufixIcon: Icons.email_outlined,
+              labelText: 'Email',
+              myController: _emailController,
+              myValidator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Required';
+                }
+                return null;
+              },
+              myKeyboardType: TextInputType.emailAddress,
+            ),
+            CustomTextFormField(
+              isPassword: _isObscure,
+              sufixIcon: _isObscure
+                  ? Icons.visibility_off_outlined
+                  : Icons.visibility_outlined,
+              showPassword: () {
+                setState(() {
+                  _isObscure = !_isObscure;
+                });
+              },
+              labelText: 'Passwrod',
+              myController: _passwordController,
+              myValidator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Required';
+                }
+                return null;
+              },
+              myKeyboardType: TextInputType.visiblePassword,
+            ),
+            CustomButton(
+              text: 'Log in',
+              onTap: () {
+                if (_formKey.currentState!.validate()) {
+                  //TODO: login using email and password
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Icon(
-                    Icons.close,
-                    size: 30,
-                  ),
-                ),
-                const SizedBox(height: 20),
                 const Text(
-                  'Log in or sign up to Airbnb',
+                  'Don\'t have an account?',
                   style: TextStyle(
-                    color: AppColors.blackColor,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
                   ),
-                ),
-                SizedBox(
-                  height: media.width * 0.1,
-                ),
-                RoundTextField(
-                  textEditingController: _emailController,
-                  hintText: 'Email',
-                  icon: "assets/images/message_icon.png",
-                  textInputType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
-                  },
-                ),
-                SizedBox(
-                  height: media.width * 0.05,
-                ),
-                RoundTextField(
-                  textEditingController: _passController,
-                  hintText: 'Password',
-                  icon: "assets/images/lock.png",
-                  textInputType: TextInputType.text,
-                  isObsecureText: _isObscure,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    } else if (value.length < 6) {
-                      return 'Password must be at least 6 characters';
-                    }
-                    return null;
-                  },
-                  rightIcon: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _isObscure = !_isObscure;
-                      });
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        _isObscure
-                            ? "assets/images/visibility.png"
-                            : "assets/images/visibility_off.png",
-                        width: 20,
-                        height: 20,
-                        fit: BoxFit.contain,
-                        color: AppColors.grayColor,
-                      ),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Forgot your password?',
-                        style: TextStyle(
-                            color: AppColors.secondaryColor1,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                      )),
-                ),
-                SizedBox(
-                  height: media.width * 0.1,
-                ),
-                RoundGradientButton(
-                    title: 'Login',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _signIn(context, _emailController.text,
-                            _passController.text);
-                      }
-                    }),
-                SizedBox(
-                  height: media.width * 0.01,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 1,
-                        color: AppColors.grayColor.withOpacity(0.5),
-                      ),
-                    ),
-                    const Text(
-                      'Or',
-                      style: TextStyle(
-                        color: AppColors.grayColor,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: double.maxFinite,
-                        height: 1,
-                        color: AppColors.grayColor.withOpacity(0.5),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: media.width * 0.05,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                          height: 50,
-                          width: 50,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                  color:
-                                      AppColors.primaryColor1.withOpacity(0.5),
-                                  width: 1)),
-                          child: Image.asset(
-                            'assets/images/google_icon.png',
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 30,
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                          height: 50,
-                          width: 50,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(14),
-                              border: Border.all(
-                                  color:
-                                      AppColors.primaryColor1.withOpacity(0.5),
-                                  width: 1)),
-                          child: Image.asset(
-                            'assets/images/google_icon.png',
-                          )),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: media.width * 0.05,
                 ),
                 TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SignUpScreen()));
-                    },
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: const TextSpan(
-                          style: TextStyle(
-                              color: AppColors.blackColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400),
-                          children: [
-                            TextSpan(text: 'New user?'),
-                            TextSpan(
-                                text: 'Register',
-                                style: TextStyle(
-                                    color: AppColors.secondaryColor1,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400))
-                          ]),
-                    ))
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      AppConstants.registerScreen,
+                    );
+                  },
+                  child: const Text(
+                    'Sign up',
+                    style: TextStyle(
+                      color: Colors.pink,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
               ],
             ),
-          ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: screenSize.width * 0.4,
+                  height: 1,
+                  color: Colors.grey.shade300,
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text('OR'),
+                ),
+                Container(
+                  width: screenSize.width * 0.4,
+                  height: 1,
+                  color: Colors.grey.shade300,
+                ),
+              ],
+            ),
+            CustomAuthButton(
+              imagePath: 'assets/images/google_icon.png',
+              bottonText: 'Continue with Google',
+              onPressed: () {
+                //TODO: login with google account
+              },
+            ),
+            CustomAuthButton(
+              imagePath: 'assets/images/github.png',
+              bottonText: 'Continue with Github',
+              onPressed: () {
+                //TODO: login with github account
+              },
+            ),
+          ],
         ),
-      )),
+      ),
     );
   }
 }

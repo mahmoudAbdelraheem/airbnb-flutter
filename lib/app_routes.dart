@@ -4,6 +4,7 @@ import 'package:airbnb_flutter/init_dependancies.dart';
 import 'package:airbnb_flutter/logic/details/details_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
 import 'package:airbnb_flutter/presentation/screens/auth/login_screen.dart';
+import 'package:airbnb_flutter/presentation/screens/auth/signup_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/details/details_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/home_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/map/full_map_screen.dart';
@@ -29,6 +30,9 @@ class AppRoutes {
       //! login screen with slide transition
       case AppConstants.loginScreen:
         return createSlideTransition(const LoginScreen());
+      //! login screen with slide transition
+      case AppConstants.registerScreen:
+        return createSlideTransition(const SignupScreen());
       //! listing details Screen
       case AppConstants.detailsScreen:
         final ListingModel listing = settings.arguments as ListingModel;
