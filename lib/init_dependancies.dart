@@ -1,8 +1,11 @@
+import 'package:airbnb_flutter/data/datasource/details/get_host_data_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/explore/get_categories_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/explore/get_listings_remote_datasource.dart';
 import 'package:airbnb_flutter/firebase_options.dart';
+import 'package:airbnb_flutter/logic/details/details_bloc.dart';
 import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
+import 'package:airbnb_flutter/repositories/details/get_host_data_repository.dart';
 import 'package:airbnb_flutter/repositories/explore/get_categories_repository.dart';
 import 'package:airbnb_flutter/repositories/explore/get_listing_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,19 +20,23 @@ Future<void> initDependancies() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-//! home page dependancies
-  _homeBloc();
 
-  //! explore page dependancies
-  _initExplore();
-}
-
-void _initExplore() {
   // Register FirebaseFirestore instance
   serviceLocator.registerLazySingleton<FirebaseFirestore>(
     () => FirebaseFirestore.instance,
   );
 
+//! home page dependancies
+  _homeBloc();
+
+  //! explore page dependancies
+  _initExplore();
+
+  //! details page dependancies
+  _initDetails();
+}
+
+void _initExplore() {
   // Register the data source
   serviceLocator.registerLazySingleton<GetListingsRemoteDatasource>(
     () => GetListingsRemoteDatasourceImp(firestore: serviceLocator()),
@@ -52,6 +59,25 @@ void _initExplore() {
     () => ExploreBloc(
       listingsRepository: serviceLocator(),
       categoriesRepository: serviceLocator(),
+    ),
+  );
+}
+
+void _initDetails() {
+  // Register the data source
+  serviceLocator.registerLazySingleton<GetHostDataRemoteDatasource>(
+    () => GetHostDataRemoteDatasourceImp(firestore: serviceLocator()),
+  );
+
+  // Register the repository
+  serviceLocator.registerLazySingleton<GetHostDataRepository>(
+    () => GetHostDataRepositoryImp(hostDtaRemoteDatasource: serviceLocator()),
+  );
+
+  // Register the DetailsBloc
+  serviceLocator.registerFactory<DetailsBloc>(
+    () => DetailsBloc(
+      getHostData: serviceLocator(),
     ),
   );
 }

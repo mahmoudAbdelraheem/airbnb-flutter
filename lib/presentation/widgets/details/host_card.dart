@@ -1,9 +1,16 @@
+import 'package:airbnb_flutter/data/models/user_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class HostCard extends StatelessWidget {
+  final String reviewsLength;
+  final String avarageRating;
+  final UserModel host;
   const HostCard({
     super.key,
+    required this.host,
+    required this.reviewsLength,
+    required this.avarageRating,
   });
 
   @override
@@ -28,11 +35,10 @@ class HostCard extends StatelessWidget {
                   Stack(
                     clipBehavior: Clip.none,
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 60,
-                        backgroundImage: CachedNetworkImageProvider(
-                          'https://t3.ftcdn.net/jpg/03/02/88/46/360_F_302884605_actpipOdPOQHDTnFtp4zg4RtlWzhOASp.jpg',
-                        ),
+                        backgroundImage:
+                            CachedNetworkImageProvider(host.image!),
                       ),
                       Positioned(
                         bottom: 15,
@@ -55,9 +61,9 @@ class HostCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  const Text(
-                    'Host Name',
-                    style: TextStyle(
+                  Text(
+                    host.name,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                       fontSize: 20,
@@ -84,50 +90,50 @@ class HostCard extends StatelessWidget {
             ),
             SizedBox(
               width: screenSize.width * 0.3,
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '345',
-                    style: TextStyle(
+                    reviewsLength,
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                       fontSize: 20,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'reviews',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 14,
                     ),
                   ),
-                  Divider(color: Colors.grey),
+                  const Divider(color: Colors.grey),
                   Row(
                     children: [
                       Text(
-                        '4.89',
-                        style: TextStyle(
+                        avarageRating,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 20,
                         ),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.star_rate_rounded,
                         size: 20,
                       ),
                     ],
                   ),
-                  Text(
+                  const Text(
                     'Rating',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 14,
                     ),
                   ),
-                  Divider(color: Colors.grey),
-                  Text(
+                  const Divider(color: Colors.grey),
+                  const Text(
                     '1',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -135,7 +141,7 @@ class HostCard extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'year Hosting',
                     style: TextStyle(
                       color: Colors.black,
