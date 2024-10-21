@@ -1,6 +1,7 @@
 import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/data/models/listing_model.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
+import 'package:airbnb_flutter/logic/details/details_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
 import 'package:airbnb_flutter/presentation/screens/auth/login_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/details/details_screen.dart';
@@ -33,8 +34,12 @@ class AppRoutes {
         final ListingModel listing = settings.arguments as ListingModel;
         return MaterialPageRoute(
           builder: (_) {
-            return DetailsScreen(
-              listing: listing,
+            return BlocProvider(
+              create: (context) => serviceLocator<DetailsBloc>()
+                ..add(GetHostAndReviewsDetailsEvent(hostId: listing.userId)),
+              child: DetailsScreen(
+                listing: listing,
+              ),
             );
           },
         );
