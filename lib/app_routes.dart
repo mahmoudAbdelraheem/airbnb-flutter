@@ -1,6 +1,7 @@
 import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/data/models/listing_model.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
+import 'package:airbnb_flutter/logic/auth/auth_bloc.dart';
 import 'package:airbnb_flutter/logic/details/details_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
 import 'package:airbnb_flutter/presentation/screens/auth/login_screen.dart';
@@ -29,10 +30,16 @@ class AppRoutes {
         );
       //! login screen with slide transition
       case AppConstants.loginScreen:
-        return createSlideTransition(const LoginScreen());
+        return createSlideTransition(BlocProvider(
+          create: (context) => serviceLocator<AuthBloc>(),
+          child: const LoginScreen(),
+        ));
       //! login screen with slide transition
       case AppConstants.registerScreen:
-        return createSlideTransition(const SignupScreen());
+        return createSlideTransition(BlocProvider(
+          create: (context) => serviceLocator<AuthBloc>(),
+          child: const SignupScreen(),
+        ));
       //! listing details Screen
       case AppConstants.detailsScreen:
         final ListingModel listing = settings.arguments as ListingModel;

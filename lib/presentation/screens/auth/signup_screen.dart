@@ -12,7 +12,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  bool _isObscure = false;
+  bool _isObscure = true;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -132,18 +132,25 @@ class _SignupScreenState extends State<SignupScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: screenSize.width * 0.4,
+                  width: screenSize.width * 0.35,
                   height: 1,
                   color: Colors.grey.shade300,
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text('OR'),
+                Container(
+                  width: screenSize.width * 0.15,
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'OR',
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
                 Container(
-                  width: screenSize.width * 0.4,
+                  width: screenSize.width * 0.35,
                   height: 1,
                   color: Colors.grey.shade300,
                 ),
