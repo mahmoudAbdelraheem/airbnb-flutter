@@ -1,10 +1,13 @@
+import 'package:airbnb_flutter/data/datasource/auth/auth_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/details/get_host_data_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/explore/get_categories_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/explore/get_listings_remote_datasource.dart';
 import 'package:airbnb_flutter/firebase_options.dart';
+import 'package:airbnb_flutter/logic/auth/auth_bloc.dart';
 import 'package:airbnb_flutter/logic/details/details_bloc.dart';
 import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
+import 'package:airbnb_flutter/repositories/auth/auth_repository.dart';
 import 'package:airbnb_flutter/repositories/details/get_host_data_repository.dart';
 import 'package:airbnb_flutter/repositories/explore/get_categories_repository.dart';
 import 'package:airbnb_flutter/repositories/explore/get_listing_repository.dart';
@@ -25,6 +28,12 @@ Future<void> initDependancies() async {
   serviceLocator.registerLazySingleton<FirebaseFirestore>(
     () => FirebaseFirestore.instance,
   );
+  serviceLocator.registerLazySingleton<FirebaseAuth>(
+    () => FirebaseAuth.instance,
+  );
+
+  //! auth dependancies
+  _initAuth();
 
 //! home page dependancies
   _homeBloc();
@@ -35,6 +44,8 @@ Future<void> initDependancies() async {
   //! details page dependancies
   _initDetails();
 }
+
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 void _initExplore() {
   // Register the data source
@@ -63,6 +74,7 @@ void _initExplore() {
   );
 }
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 void _initDetails() {
   // Register the data source
   serviceLocator.registerLazySingleton<GetHostDataRemoteDatasource>(
@@ -81,10 +93,32 @@ void _initDetails() {
     ),
   );
 }
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+void _initAuth() {
+  // Register the data source
+  serviceLocator.registerLazySingleton<AuthRemoteDatasource>(
+    () => AuthRemoteDatasourceImp(
+      firebaseAuth: serviceLocator(),
+      firestore: serviceLocator(),
+    ),
+  );
+
+  // Register the repository
+  serviceLocator.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImp(authRemoteDatasource: serviceLocator()),
+  );
+
+  // Register the DetailsBloc
+  serviceLocator.registerFactory<AuthBloc>(
+    () => AuthBloc(
+      authRepository: serviceLocator(),
+    ),
+  );
+}
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 void _homeBloc() {
-  // Register FirebaseAuth
-  serviceLocator.registerLazySingleton(() => FirebaseAuth.instance);
   // Register AuthCubit
   serviceLocator.registerLazySingleton(
     () => HomeBloc(
