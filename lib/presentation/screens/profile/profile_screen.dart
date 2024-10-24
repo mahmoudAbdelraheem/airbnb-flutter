@@ -73,13 +73,17 @@ class ProfileScreen extends StatelessWidget {
         LogOutWidget(
           onPressed: () async {
             await FirebaseAuth.instance.signOut();
-            Navigator.pushNamedAndRemoveUntil(
+            Navigator.pushReplacementNamed(
               context,
               AppConstants.homeScreen,
-              (route) => false,
             );
           },
         ),
+        // Navigator.pushNamedAndRemoveUntil(
+        //   context,
+        //   AppConstants.homeScreen,
+        //   (route) => false,
+        // );
         const Text(
           'Version 1.0.0',
         ),

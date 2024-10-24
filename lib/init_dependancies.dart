@@ -2,15 +2,19 @@ import 'package:airbnb_flutter/data/datasource/auth/auth_remote_datasource.dart'
 import 'package:airbnb_flutter/data/datasource/details/get_host_data_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/explore/get_categories_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/explore/get_listings_remote_datasource.dart';
+import 'package:airbnb_flutter/data/datasource/home/favorite_remote_datasource.dart';
+import 'package:airbnb_flutter/data/datasource/home/user_data_remote_datasource.dart';
+import 'package:airbnb_flutter/data/repositories/home/favorite_repository.dart';
+import 'package:airbnb_flutter/data/repositories/home/user_data_repository.dart';
 import 'package:airbnb_flutter/firebase_options.dart';
 import 'package:airbnb_flutter/logic/auth/auth_bloc.dart';
 import 'package:airbnb_flutter/logic/details/details_bloc.dart';
 import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
-import 'package:airbnb_flutter/repositories/auth/auth_repository.dart';
-import 'package:airbnb_flutter/repositories/details/get_host_data_repository.dart';
-import 'package:airbnb_flutter/repositories/explore/get_categories_repository.dart';
-import 'package:airbnb_flutter/repositories/explore/get_listing_repository.dart';
+import 'package:airbnb_flutter/data/repositories/auth/auth_repository.dart';
+import 'package:airbnb_flutter/data/repositories/details/get_host_data_repository.dart';
+import 'package:airbnb_flutter/data/repositories/explore/get_categories_repository.dart';
+import 'package:airbnb_flutter/data/repositories/explore/get_listing_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -119,10 +123,31 @@ void _initAuth() {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 void _homeBloc() {
+  // Register the data source
+  serviceLocator.registerFactory<UserDataRemoteDatasource>(
+    () => UserDataRemoteDatasourceImp(
+      firebaseAuth: serviceLocator(),
+      firestore: serviceLocator(),
+    ),
+  );
+  serviceLocator.registerFactory<FavoriteRemoteDatasource>(
+    () => FavoriteRemoteDatasourceImp(
+      firestore: serviceLocator(),
+    ),
+  );
+
+  // Register the repository
+  serviceLocator.registerFactory<UserDataRepository>(
+    () => UserDataRepositoryImp(userDataRemoteDatasource: serviceLocator()),
+  );
+  serviceLocator.registerFactory<FavoriteRepository>(
+    () => FavoriteRepositoryImp(favoriteRemoteDatasource: serviceLocator()),
+  );
   // Register AuthCubit
-  serviceLocator.registerLazySingleton(
+  serviceLocator.registerFactory<HomeBloc>(
     () => HomeBloc(
-      firebaseAuth: serviceLocator<FirebaseAuth>(),
+      userDataRepository: serviceLocator(),
+      favoriteRepository: serviceLocator(),
     ),
   );
 }
