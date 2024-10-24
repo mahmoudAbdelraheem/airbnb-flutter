@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:airbnb_flutter/data/models/category_model.dart';
 import 'package:airbnb_flutter/data/models/listing_model.dart';
-import 'package:airbnb_flutter/repositories/explore/get_categories_repository.dart';
-import 'package:airbnb_flutter/repositories/explore/get_listing_repository.dart';
+import 'package:airbnb_flutter/data/repositories/explore/get_categories_repository.dart';
+import 'package:airbnb_flutter/data/repositories/explore/get_listing_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 part 'explore_event.dart';

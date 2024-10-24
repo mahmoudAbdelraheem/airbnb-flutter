@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:airbnb_flutter/repositories/auth/auth_repository.dart';
+import 'package:airbnb_flutter/data/repositories/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

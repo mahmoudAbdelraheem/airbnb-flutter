@@ -34,7 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is AuthLoggedInState ||
               state is AuthLoggedInWithGoogleState) {
-            Navigator.pop(context);
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppConstants.homeScreen,
+              (route) => false,
+            );
           }
         },
         builder: (context, state) {

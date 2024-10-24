@@ -31,7 +31,7 @@ class UserModel {
       id: json['id'],
       name: json['name'],
       email: json['email'],
-      favoriteIds: List<String>.from(json['favoriteIds'] ?? []),
+      favoriteIds: List<String>.from(json['favoritesIds'] ?? []),
       image: json['image'],
       displayName: json['displayName'],
       address: json['address'],
