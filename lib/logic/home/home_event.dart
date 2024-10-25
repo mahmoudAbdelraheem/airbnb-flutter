@@ -5,16 +5,16 @@ sealed class HomeEvent {}
 
 class HomeGetCurrentUserEvent extends HomeEvent {}
 
-class HomeAddFavoriteEvent extends HomeEvent {
-  final String listingId;
-  HomeAddFavoriteEvent({
-    required this.listingId,
-  });
-}
+// class HomeAddFavoriteEvent extends HomeEvent {
+//   final String listingId;
+//   HomeAddFavoriteEvent({
+//     required this.listingId,
+//   });
+// }
 
-class HomeRemoveFavoriteEvent extends HomeEvent {
-  final String listingId;
-  HomeRemoveFavoriteEvent({
-    required this.listingId,
-  });
-}
+// class HomeRemoveFavoriteEvent extends HomeEvent {
+//   final String listingId;
+//   HomeRemoveFavoriteEvent({
+//     required this.listingId,
+//   });
+// }
