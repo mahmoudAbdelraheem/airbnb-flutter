@@ -1,6 +1,7 @@
 import 'package:airbnb_flutter/core/widgets/loading.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
 import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
+import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/nav_bar.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/listing_card.dart';
@@ -18,13 +19,26 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   Widget build(BuildContext context) {
     final HomeBloc homeBloc = BlocProvider.of<HomeBloc>(context);
-
-    return BlocProvider(
-      create: (context) =>
-          serviceLocator<ExploreBloc>()..add(GetListingsAndCategoriesEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => serviceLocator<ExploreBloc>()
+            ..add(
+              GetListingsAndCategoriesEvent(),
+            ),
+        ),
+        BlocProvider(
+          create: (_) => serviceLocator<FavoriteBloc>()
+            ..add(
+              GetFavoritesEvent(
+                userId: homeBloc.user!.uid,
+              ),
+            ),
+        ),
+      ],
       child: BlocConsumer<ExploreBloc, ExploreState>(
         listener: (context, state) {
-          // TODO: implement listener
+          //TODO: add listener
         },
         builder: (context, state) {
           return Column(children: [
@@ -38,24 +52,34 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     child: ListView.builder(
                       itemCount: state.listings.length,
                       itemBuilder: (context, index) {
-                        bool isFavorite = homeBloc.userModel!.favoriteIds
-                            .contains(state.listings[index].id);
+                        bool isFavorite = false;
+                        // if (homeBloc.userModel != null) {
+                        //   isFavorite = homeBloc.userModel!.favoriteIds
+                        //       .contains(state.listings[index].id);
+                        // }
+                        isFavorite =
+                            context.read<FavoriteBloc>().favoritesIds.contains(
+                                  state.listings[index].id,
+                                );
+
                         return ListingCard(
                           listing: state.listings[index],
                           isFavorite: isFavorite,
                           onTapFavorite: () {
                             if (isFavorite) {
-                              homeBloc.add(
-                                HomeRemoveFavoriteEvent(
-                                  listingId: state.listings[index].id,
-                                ),
-                              );
+                              context.read<FavoriteBloc>().add(
+                                    RemoveFavoriteEvent(
+                                      listingId: state.listings[index].id,
+                                      userId: homeBloc.user!.uid,
+                                    ),
+                                  );
                             } else {
-                              homeBloc.add(
-                                HomeAddFavoriteEvent(
-                                  listingId: state.listings[index].id,
-                                ),
-                              );
+                              context.read<FavoriteBloc>().add(
+                                    AddFavoriteEvent(
+                                      listingId: state.listings[index].id,
+                                      userId: homeBloc.user!.uid,
+                                    ),
+                                  );
                             }
                             setState(() {});
                           },
