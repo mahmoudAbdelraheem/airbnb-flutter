@@ -31,6 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is HomeLoggedOutState) {
             Navigator.pushNamed(context, AppConstants.loginScreen);
           }
+          if (state is HomeOnPageChangedState) {
+            _currentIndex = state.pageIndex;
+            setState(() {});
+          }
         },
         child: Scaffold(
           body: screens[_currentIndex],
@@ -38,9 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: Colors.grey[200],
             currentIndex: _currentIndex,
             onTap: (int selectedIndex) {
-              setState(() {
-                _currentIndex = selectedIndex;
-              });
+              context
+                  .read<HomeBloc>()
+                  .add(HomeOnPageChangedEvent(index: selectedIndex));
             },
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: true,

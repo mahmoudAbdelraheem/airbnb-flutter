@@ -23,3 +23,8 @@ final class HomeErrorState extends HomeState {
   final String error;
   HomeErrorState({required this.error});
 }
+
+final class HomeOnPageChangedState extends HomeState {
+  final int pageIndex;
+  HomeOnPageChangedState({required this.pageIndex});
+}
