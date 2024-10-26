@@ -1,3 +1,4 @@
+import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
 import 'package:airbnb_flutter/core/widgets/loading.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
 import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
@@ -28,12 +29,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
             ),
         ),
         BlocProvider(
-          create: (_) => serviceLocator<FavoriteBloc>()
-            ..add(
-              GetFavoritesEvent(
-                userId: homeBloc.user!.uid,
-              ),
-            ),
+          create: (_) {
+            if (homeBloc.user == null) {
+              return serviceLocator<FavoriteBloc>();
+            } else {
+              return serviceLocator<FavoriteBloc>()
+                ..add(
+                  GetFavoritesEvent(
+                    userId: homeBloc.user!.uid,
+                  ),
+                );
+            }
+          },
         ),
       ],
       child: BlocConsumer<ExploreBloc, ExploreState>(
@@ -73,6 +80,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       userId: homeBloc.user!.uid,
                                     ),
                                   );
+                              showCustomSnakeBar(
+                                context: context,
+                                message: "Removed from favorites",
+                              );
                             } else {
                               context.read<FavoriteBloc>().add(
                                     AddFavoriteEvent(
@@ -80,6 +91,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       userId: homeBloc.user!.uid,
                                     ),
                                   );
+                              showCustomSnakeBar(
+                                context: context,
+                                message: "Added to favorites",
+                              );
                             }
                             setState(() {});
                           },

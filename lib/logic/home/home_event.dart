@@ -5,16 +5,7 @@ sealed class HomeEvent {}
 
 class HomeGetCurrentUserEvent extends HomeEvent {}
 
-// class HomeAddFavoriteEvent extends HomeEvent {
-//   final String listingId;
-//   HomeAddFavoriteEvent({
-//     required this.listingId,
-//   });
-// }
-
-// class HomeRemoveFavoriteEvent extends HomeEvent {
-//   final String listingId;
-//   HomeRemoveFavoriteEvent({
-//     required this.listingId,
-//   });
-// }
+class HomeOnPageChangedEvent extends HomeEvent {
+  final int index;
+  HomeOnPageChangedEvent({required this.index});
+}
