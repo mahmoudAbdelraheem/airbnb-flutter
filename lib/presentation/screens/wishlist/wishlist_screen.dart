@@ -89,6 +89,12 @@ class WishlistScreen extends StatelessWidget {
                                               userId: homeBloc.user!.uid,
                                             ),
                                           );
+
+                                      context.read<FavoriteBloc>().add(
+                                            GetFavoritesEvent(
+                                              userId: homeBloc.user!.uid,
+                                            ),
+                                          );
                                       showCustomSnakeBar(
                                         context: context,
                                         message: "Removed from favorites",

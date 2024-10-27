@@ -13,12 +13,6 @@ final class HomeCurrentUserState extends HomeState {
   HomeCurrentUserState({this.user, this.userModel});
 }
 
-// final class HomeAddFavoriteState extends HomeState {}
-
-// final class HomeRemoveFavoriteState extends HomeState {}
-
-final class HomeLoggedOutState extends HomeState {}
-
 final class HomeErrorState extends HomeState {
   final String error;
   HomeErrorState({required this.error});

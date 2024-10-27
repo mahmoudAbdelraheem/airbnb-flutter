@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: BlocListener<HomeBloc, HomeState>(
         listener: (context, state) {
-          if (state is HomeLoggedOutState) {
+          if (state is HomeCurrentUserState && state.user == null) {
             Navigator.pushNamed(context, AppConstants.loginScreen);
           }
           if (state is HomeOnPageChangedState) {
