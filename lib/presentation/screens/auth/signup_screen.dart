@@ -1,4 +1,5 @@
 import 'package:airbnb_flutter/core/constants/app_constants.dart';
+import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
 import 'package:airbnb_flutter/core/widgets/custom_button.dart';
 import 'package:airbnb_flutter/core/widgets/custom_text_form_field.dart';
 import 'package:airbnb_flutter/core/widgets/loading.dart';
@@ -42,6 +43,8 @@ class _SignupScreenState extends State<SignupScreen> {
               AppConstants.homeScreen,
               (route) => false,
             );
+          } else if (state is AuthErrorState) {
+            showCustomSnakeBar(context: context, message: state.error);
           }
         },
         builder: (context, state) {

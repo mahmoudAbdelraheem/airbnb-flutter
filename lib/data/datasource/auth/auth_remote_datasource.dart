@@ -99,9 +99,9 @@ class AuthRemoteDatasourceImp implements AuthRemoteDatasource {
       await _saveUserToFirestore(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw ('No user found for that email.');
+        throw Exception('No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        throw ('Wrong password provided for that user.');
+        throw Exception('Wrong password provided for that user.');
       } else {
         throw Exception(e.message!);
       }

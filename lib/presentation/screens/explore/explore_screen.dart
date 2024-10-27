@@ -60,12 +60,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       itemCount: state.listings.length,
                       itemBuilder: (context, index) {
                         bool isFavorite = false;
-                        // if (homeBloc.userModel != null) {
-                        //   isFavorite = homeBloc.userModel!.favoriteIds
-                        //       .contains(state.listings[index].id);
-                        // }
+
                         isFavorite =
-                            context.read<FavoriteBloc>().favoritesIds.contains(
+                            context.watch<FavoriteBloc>().favoritesIds.contains(
                                   state.listings[index].id,
                                 );
 
