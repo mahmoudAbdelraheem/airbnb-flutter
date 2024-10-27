@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
   final List<CategoryModel> categoties;
+  final VoidCallback onSearchPressed;
   const NavBar({
     super.key,
     required this.categoties,
+    required this.onSearchPressed,
   });
 
   @override
@@ -25,7 +27,7 @@ class NavBar extends StatelessWidget {
       ]),
       child: Column(
         children: [
-          Search(onPressed: () {}),
+          Search(onPressed: onSearchPressed),
           Categoties(categoties: categoties),
         ],
       ),

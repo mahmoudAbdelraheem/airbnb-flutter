@@ -21,7 +21,7 @@ Future<dynamic> showBottomSheetModal({
     builder: (context) => Container(
       height: screenSize.height * 0.95,
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(top: 15),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
