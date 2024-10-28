@@ -7,7 +7,7 @@ import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/nav_bar.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/listing_card.dart';
-import 'package:airbnb_flutter/presentation/widgets/explore/search_modal_widget.dart';
+import 'package:airbnb_flutter/presentation/widgets/search/search_modal_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -50,69 +50,73 @@ class _ExploreScreenState extends State<ExploreScreen> {
           //TODO: add listener
         },
         builder: (context, state) {
-          return Column(children: [
-            state is GetListingsAndCategoriesSuccessState
-                ? NavBar(
-                    categoties: state.categories,
-                    onSearchPressed: () {
-                      showBottomSheetModal(
-                        context: context,
-                        screenSize: MediaQuery.sizeOf(context),
-                        child: const SearchModalWidget(),
-                      );
-                    })
-                : state is GetListingsAndCategoriesLoadingState
-                    ? const SizedBox(height: 150, child: Loading())
-                    : const SizedBox(),
-            state is GetListingsAndCategoriesSuccessState
-                ? Expanded(
-                    child: ListView.builder(
-                      itemCount: state.listings.length,
-                      itemBuilder: (context, index) {
-                        bool isFavorite = false;
-
-                        isFavorite =
-                            context.watch<FavoriteBloc>().favoritesIds.contains(
-                                  state.listings[index].id,
-                                );
-
-                        return ListingCard(
-                          listing: state.listings[index],
-                          isFavorite: isFavorite,
-                          onTapFavorite: () {
-                            if (isFavorite) {
-                              context.read<FavoriteBloc>().add(
-                                    RemoveFavoriteEvent(
-                                      listingId: state.listings[index].id,
-                                      userId: homeBloc.user!.uid,
-                                    ),
-                                  );
-                              showCustomSnakeBar(
-                                context: context,
-                                message: "Removed from favorites",
-                              );
-                            } else {
-                              context.read<FavoriteBloc>().add(
-                                    AddFavoriteEvent(
-                                      listingId: state.listings[index].id,
-                                      userId: homeBloc.user!.uid,
-                                    ),
-                                  );
-                              showCustomSnakeBar(
-                                context: context,
-                                message: "Added to favorites",
-                              );
-                            }
-                            setState(() {});
-                          },
+          return Column(
+            children: [
+              state is GetListingsAndCategoriesSuccessState
+                  ? NavBar(
+                      categoties: state.categories,
+                      onSearchPressed: () {
+                        showBottomSheetModal(
+                          context: context,
+                          screenSize: MediaQuery.sizeOf(context),
+                          child: const SearchModalWidget(),
                         );
-                      },
-                    ),
-                  )
-                : State is GetListingsAndCategoriesLoadingState
-                    ? const Expanded(child: SizedBox(child: Loading()))
-                    : const SizedBox(),
-          ]);
+                      })
+                  : state is GetListingsAndCategoriesLoadingState
+                      ? const SizedBox(height: 150, child: Loading())
+                      : const SizedBox(),
+              state is GetListingsAndCategoriesSuccessState
+                  ? Expanded(
+                      child: ListView.builder(
+                        itemCount: state.listings.length,
+                        itemBuilder: (context, index) {
+                          bool isFavorite = false;
+
+                          isFavorite = context
+                              .watch<FavoriteBloc>()
+                              .favoritesIds
+                              .contains(
+                                state.listings[index].id,
+                              );
+
+                          return ListingCard(
+                            listing: state.listings[index],
+                            isFavorite: isFavorite,
+                            onTapFavorite: () {
+                              if (isFavorite) {
+                                context.read<FavoriteBloc>().add(
+                                      RemoveFavoriteEvent(
+                                        listingId: state.listings[index].id,
+                                        userId: homeBloc.user!.uid,
+                                      ),
+                                    );
+                                showCustomSnakeBar(
+                                  context: context,
+                                  message: "Removed from favorites",
+                                );
+                              } else {
+                                context.read<FavoriteBloc>().add(
+                                      AddFavoriteEvent(
+                                        listingId: state.listings[index].id,
+                                        userId: homeBloc.user!.uid,
+                                      ),
+                                    );
+                                showCustomSnakeBar(
+                                  context: context,
+                                  message: "Added to favorites",
+                                );
+                              }
+                              setState(() {});
+                            },
+                          );
+                        },
+                      ),
+                    )
+                  : State is GetListingsAndCategoriesLoadingState
+                      ? const Expanded(child: SizedBox(child: Loading()))
+                      : const SizedBox(),
+            ],
+          );
         },
       ),
     );
