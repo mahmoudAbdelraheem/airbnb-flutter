@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 
 class Search extends StatelessWidget {
+  final String place;
+  final String date;
+  final String guest;
+  final IconData icon;
   final VoidCallback onPressed;
   const Search({
     super.key,
     required this.onPressed,
+    required this.place,
+    required this.date,
+    required this.guest,
+    required this.icon,
   });
 
   @override
@@ -13,27 +21,27 @@ class Search extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: GestureDetector(
         onTap: onPressed,
-        child: const Card(
+        child: Card(
           shadowColor: Colors.black54,
           elevation: 12,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(50),
             ),
           ),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
             child: Row(
               children: [
                 Icon(
-                  Icons.search_outlined,
+                  icon,
                   size: 26,
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Where to?',
                       style: TextStyle(
                         fontSize: 16,
@@ -42,8 +50,8 @@ class Search extends StatelessWidget {
                     ),
                     // SizedBox(height: 5),
                     Text(
-                      'Anywhere . Any week . Add guests',
-                      style: TextStyle(
+                      '$place . $date . $guest',
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.black45,
                       ),

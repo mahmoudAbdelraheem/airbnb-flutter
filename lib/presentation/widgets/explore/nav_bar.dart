@@ -5,11 +5,19 @@ import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
   final List<CategoryModel> categoties;
-  final VoidCallback onSearchPressed;
+  final String place;
+  final String date;
+  final String guest;
+  final IconData icon;
+  final VoidCallback openSearchModal;
   const NavBar({
     super.key,
     required this.categoties,
-    required this.onSearchPressed,
+    required this.openSearchModal,
+    required this.place,
+    required this.date,
+    required this.guest,
+    required this.icon,
   });
 
   @override
@@ -27,7 +35,13 @@ class NavBar extends StatelessWidget {
       ]),
       child: Column(
         children: [
-          Search(onPressed: onSearchPressed),
+          Search(
+            onPressed: openSearchModal,
+            place: place,
+            date: date,
+            guest: guest,
+            icon: icon,
+          ),
           Categoties(categoties: categoties),
         ],
       ),

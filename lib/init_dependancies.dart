@@ -4,6 +4,8 @@ import 'package:airbnb_flutter/data/datasource/explore/get_categories_remote_dat
 import 'package:airbnb_flutter/data/datasource/explore/get_listings_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/favorites/favorite_remote_datasource.dart';
 import 'package:airbnb_flutter/data/datasource/home/user_data_remote_datasource.dart';
+import 'package:airbnb_flutter/data/datasource/search/search_remote_datesource.dart';
+import 'package:airbnb_flutter/data/models/search/search_repository.dart';
 import 'package:airbnb_flutter/data/repositories/favorites/favorite_repository.dart';
 import 'package:airbnb_flutter/data/repositories/home/user_data_repository.dart';
 import 'package:airbnb_flutter/firebase_options.dart';
@@ -63,6 +65,9 @@ void _initExplore() {
   serviceLocator.registerLazySingleton<GetCategoriesRemoteDatasource>(
     () => GetCategoriesRemoteDatasourceImp(firestore: serviceLocator()),
   );
+  serviceLocator.registerLazySingleton<SearchRemoteDatesource>(
+    () => SearchRemoteDatesourceImp(firestore: serviceLocator()),
+  );
 
   // Register the repository
   serviceLocator.registerLazySingleton<GetListingsRepository>(
@@ -72,12 +77,16 @@ void _initExplore() {
     () => GetCategotiesRepositoryImp(
         categoriesRemoteDatasource: serviceLocator()),
   );
+  serviceLocator.registerLazySingleton<SearchRepository>(
+    () => SearchRepositoryImp(searchRemoteDatesource: serviceLocator()),
+  );
 
   // Register the ExploreBloc
   serviceLocator.registerFactory<ExploreBloc>(
     () => ExploreBloc(
       listingsRepository: serviceLocator(),
       categoriesRepository: serviceLocator(),
+      searchRepository: serviceLocator(),
     ),
   );
 }
