@@ -50,17 +50,32 @@ class _ExploreScreenState extends State<ExploreScreen> {
           //TODO: add listener
         },
         builder: (context, state) {
+          ExploreBloc exploreBloc = BlocProvider.of<ExploreBloc>(context);
           return Column(
             children: [
               state is GetListingsAndCategoriesSuccessState
                   ? NavBar(
                       categoties: state.categories,
-                      onSearchPressed: () {
-                        showBottomSheetModal(
-                          context: context,
-                          screenSize: MediaQuery.sizeOf(context),
-                          child: const SearchModalWidget(),
-                        );
+                      place: exploreBloc.placeValue,
+                      date: exploreBloc.dateValue,
+                      guest: exploreBloc.guestValue,
+                      icon: state.isSearch
+                          ? Icons.arrow_back_rounded
+                          : Icons.search_outlined,
+                      openSearchModal: () {
+                        if (state.isSearch) {
+                          exploreBloc.add(
+                            GetListingsAndCategoriesEvent(),
+                          );
+                        } else {
+                          showBottomSheetModal(
+                            context: context,
+                            screenSize: MediaQuery.sizeOf(context),
+                            child: SearchModalWidget(
+                              exploreBloc: exploreBloc,
+                            ),
+                          );
+                        }
                       })
                   : state is GetListingsAndCategoriesLoadingState
                       ? const SizedBox(height: 150, child: Loading())

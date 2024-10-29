@@ -1,10 +1,9 @@
-// Widget for Country Picker
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 
 class CountryPickerWidget extends StatelessWidget {
   final String selectedCountry;
-  final ValueChanged<String> onCountrySelected;
+  final ValueChanged<Map<String, String>> onCountrySelected;
 
   const CountryPickerWidget({
     super.key,
@@ -20,7 +19,11 @@ class CountryPickerWidget extends StatelessWidget {
           context: context,
           showPhoneCode: false,
           onSelect: (Country country) {
-            onCountrySelected(country.name);
+            // Pass both the name and code as a map
+            onCountrySelected({
+              'name': country.name,
+              'code': country.countryCode,
+            });
           },
         );
       },

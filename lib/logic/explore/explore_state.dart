@@ -8,10 +8,11 @@ final class ExploreInitialState extends ExploreState {}
 final class GetListingsAndCategoriesSuccessState extends ExploreState {
   final List<ListingModel> listings;
   final List<CategoryModel> categories;
-
+  final bool isSearch;
   GetListingsAndCategoriesSuccessState({
     required this.listings,
     required this.categories,
+    this.isSearch = false,
   });
 }
 

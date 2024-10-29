@@ -1,5 +1,6 @@
 import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/core/widgets/custom_button.dart';
+import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
 import 'package:airbnb_flutter/presentation/widgets/custom_date_range_picker.dart';
 import 'package:airbnb_flutter/presentation/widgets/search/bottom_actions.dart';
 import 'package:airbnb_flutter/presentation/widgets/search/country_picker_widget.dart';
@@ -10,7 +11,8 @@ import 'package:flutter_date_pickers/flutter_date_pickers.dart' as dp;
 import 'package:intl/intl.dart';
 
 class SearchModalWidget extends StatefulWidget {
-  const SearchModalWidget({super.key});
+  final ExploreBloc exploreBloc;
+  const SearchModalWidget({super.key, required this.exploreBloc});
 
   @override
   State<SearchModalWidget> createState() => _SearchModalWidgetState();
@@ -23,6 +25,7 @@ class _SearchModalWidgetState extends State<SearchModalWidget> {
 
   // Place selection
   String selectedCountry = 'Choose a country';
+  String selectedCountryCode = '';
   String selectedRegion = '';
 
   // Date selection
@@ -86,7 +89,8 @@ class _SearchModalWidgetState extends State<SearchModalWidget> {
                       selectedCountry: selectedCountry,
                       onCountrySelected: (country) {
                         setState(() {
-                          selectedCountry = country;
+                          selectedCountry = country['name']!;
+                          selectedCountryCode = country['code']!;
                           toggleSection('date');
                         });
                       },
@@ -228,12 +232,27 @@ class _SearchModalWidgetState extends State<SearchModalWidget> {
         ),
         BottomActions(
           onClear: () {
-            // TODO: Implement clear functionality
+            selectedCountry = 'Choose a country';
+            selectedRegion = '';
+            selectedCheckInDate = '';
+            guestsCounter.value = 0;
+            roomsCounter.value = 0;
+            bathroomsCounter.value = 0;
+            toggleSection('place');
           },
           onSearch: () {
-            print('Guests: ${guestsCounter.value}');
-            print('Rooms: ${roomsCounter.value}');
-            print('Bathrooms: ${bathroomsCounter.value}');
+            Navigator.pop(context);
+            widget.exploreBloc.add(
+              OnListingsSearchEvent(
+                locationValue: selectedCountryCode,
+                category: selectedCountry,
+                startDate: selectedDateRange!.start,
+                endDate: selectedDateRange!.end,
+                guestCount: guestsCounter.value,
+                roomCount: roomsCounter.value,
+                bathroomCount: bathroomsCounter.value,
+              ),
+            );
           },
         ),
       ],
