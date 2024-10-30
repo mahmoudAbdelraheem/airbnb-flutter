@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 
 class ListingDetailsImages extends StatefulWidget {
   final ListingModel listing;
-  const ListingDetailsImages({super.key, required this.listing});
+  final bool isFavorite;
+  const ListingDetailsImages(
+      {super.key, required this.listing, required this.isFavorite});
 
   @override
   State<ListingDetailsImages> createState() => _ListingDetailsImagesState();
@@ -29,7 +31,10 @@ class _ListingDetailsImagesState extends State<ListingDetailsImages> {
             },
           ),
         ),
-        const ListingDetailsHeader(),
+        ListingDetailsHeader(
+          isFavorite: widget.isFavorite,
+          listingId: widget.listing.id,
+        ),
         Positioned(
           bottom: 10,
           right: 10,

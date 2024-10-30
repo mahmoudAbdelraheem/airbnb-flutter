@@ -3,6 +3,7 @@ import 'package:airbnb_flutter/data/models/listing_model.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
 import 'package:airbnb_flutter/logic/auth/auth_bloc.dart';
 import 'package:airbnb_flutter/logic/details/details_bloc.dart';
+import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
 import 'package:airbnb_flutter/presentation/screens/auth/login_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/auth/signup_screen.dart';
@@ -42,14 +43,33 @@ class AppRoutes {
         ));
       //! listing details Screen
       case AppConstants.detailsScreen:
-        final ListingModel listing = settings.arguments as ListingModel;
+        final Map<String, dynamic> data =
+            settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) {
-            return BlocProvider(
-              create: (context) => serviceLocator<DetailsBloc>()
-                ..add(GetHostAndReviewsDetailsEvent(hostId: listing.userId)),
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => serviceLocator<DetailsBloc>()
+                    ..add(
+                      GetHostAndReviewsDetailsEvent(
+                        hostId: data['listing'].userId,
+                      ),
+                    ),
+                ),
+                BlocProvider(
+                  create: (context) => serviceLocator<FavoriteBloc>(),
+                ),
+                BlocProvider(
+                  create: (context) => serviceLocator<HomeBloc>()
+                    ..add(
+                      HomeGetCurrentUserEvent(),
+                    ),
+                ),
+              ],
               child: DetailsScreen(
-                listing: listing,
+                listing: data['listing'] as ListingModel,
+                isFavorite: data['isFavorite'] as bool,
               ),
             );
           },

@@ -41,7 +41,10 @@ class _ListingCardState extends State<ListingCard> {
                     onTap: () {
                       Navigator.of(context).pushNamed(
                         AppConstants.detailsScreen,
-                        arguments: widget.listing,
+                        arguments: {
+                          'listing': widget.listing,
+                          'isFavorite': widget.isFavorite,
+                        },
                       );
                     },
                     child: ListingImagesView(
