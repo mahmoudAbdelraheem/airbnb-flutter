@@ -11,7 +11,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DetailsScreen extends StatefulWidget {
   final ListingModel listing;
-  const DetailsScreen({super.key, required this.listing});
+  final bool isFavorite;
+  const DetailsScreen(
+      {super.key, required this.listing, required this.isFavorite});
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -33,7 +35,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
           ),
           body: ListView(
             children: [
-              ListingDetailsImages(listing: widget.listing),
+              ListingDetailsImages(
+                listing: widget.listing,
+                isFavorite: widget.isFavorite,
+              ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 10),

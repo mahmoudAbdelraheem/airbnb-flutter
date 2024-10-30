@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class MyIcon extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData icon;
+  final Color color;
   const MyIcon({
     super.key,
     required this.onPressed,
     required this.icon,
+    this.color = Colors.black,
   });
 
   @override
@@ -22,7 +24,7 @@ class MyIcon extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           color: Colors.white,
         ),
-        child: Icon(icon, size: 20),
+        child: Icon(icon, size: 20, color: color),
       ),
     );
   }
