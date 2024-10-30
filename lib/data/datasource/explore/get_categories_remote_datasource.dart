@@ -21,8 +21,12 @@ class GetCategoriesRemoteDatasourceImp
 
       // Map Firestore documents to List<Map<String, dynamic>>
       List<Map<String, dynamic>> categories = querySnapshot.docs.map((doc) {
-        return doc.data() as Map<String, dynamic>;
+        // Add the document ID as an 'id' field to the category data
+        Map<String, dynamic> categoryData = doc.data() as Map<String, dynamic>;
+        categoryData['id'] = doc.id;
+        return categoryData;
       }).toList();
+
       return categories;
     } catch (e) {
       print('Error fetching categories: $e');

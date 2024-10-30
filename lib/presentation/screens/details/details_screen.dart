@@ -67,12 +67,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         fontSize: 18,
                       ),
                     ),
-                    Text(
-                      widget.listing.category,
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
                     const SizedBox(height: 10),
                     const Text(
                       'About this place',

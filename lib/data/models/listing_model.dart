@@ -1,7 +1,7 @@
 class ListingModel {
   final bool approved;
   final int bathroomCount;
-  final String category;
+  final String categoryId;
   final String createdAt;
   final String description;
   final String descriptionAr;
@@ -21,7 +21,7 @@ class ListingModel {
   ListingModel({
     required this.approved,
     required this.bathroomCount,
-    required this.category,
+    required this.categoryId,
     required this.createdAt,
     required this.description,
     required this.descriptionAr,
@@ -46,7 +46,7 @@ class ListingModel {
       bathroomCount: json['bathroomCount'] is int
           ? json['bathroomCount']
           : int.parse(json['bathroomCount'].toString()),
-      category: json['category'] ?? '', // Add default values if necessary
+      categoryId: json['categoryId'] ?? '', // Add default values if necessary
       createdAt: json['createdAt'] ?? '',
       description: json['description'] ?? '',
       descriptionAr: json['descriptionAr'] ?? '',
@@ -79,7 +79,7 @@ class ListingModel {
     return {
       'approved': approved,
       'bathroomCount': bathroomCount,
-      'category': category,
+      'categoryId': categoryId,
       'createdAt': createdAt,
       'description': description,
       'descriptionAr': descriptionAr,

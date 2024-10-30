@@ -5,6 +5,12 @@ sealed class ExploreEvent {}
 
 class GetListingsAndCategoriesEvent extends ExploreEvent {}
 
+class GetListingByCategoryEvent extends ExploreEvent {
+  final String categoryId;
+
+  GetListingByCategoryEvent({required this.categoryId});
+}
+
 class OnListingsSearchEvent extends ExploreEvent {
   final String locationValue;
   final String category;
