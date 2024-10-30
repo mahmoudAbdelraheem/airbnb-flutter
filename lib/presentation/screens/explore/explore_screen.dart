@@ -59,6 +59,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       place: exploreBloc.placeValue,
                       date: exploreBloc.dateValue,
                       guest: exploreBloc.guestValue,
+                      exploreBloc: exploreBloc,
                       icon: state.isSearch
                           ? Icons.arrow_back_rounded
                           : Icons.search_outlined,

@@ -5,44 +5,51 @@ import 'package:flutter/material.dart';
 
 class Category extends StatelessWidget {
   final CategoryModel category;
+  final VoidCallback onPressed;
+  final bool isSelected;
   const Category({
     required this.category,
     super.key,
+    required this.onPressed,
+    required this.isSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsetsDirectional.only(top: 10),
-      margin: const EdgeInsetsDirectional.only(end: 15),
-      // decoration: BoxDecoration(
-      // border: index == 0
-      //     ? const Border(
-      //         bottom: BorderSide(
-      //           color: Colors.black,
-      //           width: 2,
-      //         ),
-      //       )
-      //     : null),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SvgPicture.network(
-            category.image,
-            width: 30,
-            height: 30,
-            fit: BoxFit.contain,
-            colorFilter: const ColorFilter.mode(
-              // Colors.grey.shade700,
-              Colors.black,
-              BlendMode.srcIn,
+    return InkWell(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsetsDirectional.only(top: 10),
+        margin: const EdgeInsetsDirectional.only(end: 15),
+        decoration: isSelected
+            ? const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                  ),
+                ),
+              )
+            : null,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.network(
+              category.image,
+              width: 30,
+              height: 30,
+              fit: BoxFit.contain,
+              colorFilter: ColorFilter.mode(
+                isSelected ? Colors.black : Colors.grey.shade700,
+                BlendMode.srcIn,
+              ),
+              placeholderBuilder: (context) => const Loading(),
             ),
-            placeholderBuilder: (context) => const Loading(),
-          ),
-          Text(category.label),
-        ],
+            Text(category.label),
+          ],
+        ),
       ),
     );
   }

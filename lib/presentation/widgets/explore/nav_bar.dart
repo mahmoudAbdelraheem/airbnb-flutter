@@ -1,4 +1,5 @@
 import 'package:airbnb_flutter/data/models/category_model.dart';
+import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/categories.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/search.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class NavBar extends StatelessWidget {
   final String guest;
   final IconData icon;
   final VoidCallback openSearchModal;
+  final ExploreBloc exploreBloc;
   const NavBar({
     super.key,
     required this.categoties,
@@ -18,6 +20,7 @@ class NavBar extends StatelessWidget {
     required this.date,
     required this.guest,
     required this.icon,
+    required this.exploreBloc,
   });
 
   @override
@@ -42,7 +45,10 @@ class NavBar extends StatelessWidget {
             guest: guest,
             icon: icon,
           ),
-          Categoties(categoties: categoties),
+          Categoties(
+            categoties: categoties,
+            exploreBloc: exploreBloc,
+          ),
         ],
       ),
     );

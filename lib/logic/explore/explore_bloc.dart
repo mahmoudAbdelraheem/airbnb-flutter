@@ -22,6 +22,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
   }) : super(ExploreInitialState()) {
     on<GetListingsAndCategoriesEvent>(_getListingsAndCategories);
     on<OnListingsSearchEvent>(_getListingBySearchQuery);
+    on<GetListingByCategoryEvent>(_getListingsByCategoryId);
   }
   String placeValue = 'Any where';
   String dateValue = 'Any week';
@@ -81,6 +82,31 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
       );
     } catch (e) {
       emit(GetListingsAndCategoriesErrorState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _getListingsByCategoryId(
+    GetListingByCategoryEvent event,
+    Emitter<ExploreState> emit,
+  ) {
+    emit(GetListingsAndCategoriesLoadingState());
+    List<ListingModel> categoryListings = listings
+        .where((element) => element.categoryId == event.categoryId)
+        .toList();
+    if (categoryListings.isEmpty) {
+      emit(
+        GetListingsAndCategoriesSuccessState(
+          listings: listings,
+          categories: categories,
+        ),
+      );
+    } else {
+      emit(
+        GetListingsAndCategoriesSuccessState(
+          listings: categoryListings,
+          categories: categories,
+        ),
+      );
     }
   }
 }
