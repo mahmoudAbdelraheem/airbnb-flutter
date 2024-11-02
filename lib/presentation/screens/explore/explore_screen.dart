@@ -1,3 +1,4 @@
+import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/core/functions/show_bottom_sheet_modal.dart';
 import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
 import 'package:airbnb_flutter/core/widgets/loading.dart';
@@ -99,6 +100,13 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             listing: state.listings[index],
                             isFavorite: isFavorite,
                             onTapFavorite: () {
+                              if (homeBloc.user == null) {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppConstants.loginScreen,
+                                );
+                                return;
+                              }
                               if (isFavorite) {
                                 context.read<FavoriteBloc>().add(
                                       RemoveFavoriteEvent(

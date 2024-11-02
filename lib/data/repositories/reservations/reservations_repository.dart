@@ -25,7 +25,6 @@ class ReservationsRepositoryImp implements ReservationsRepository {
           (reservation) => ReservationModel.fromJson(reservation),
         )
         .toList();
-    print('reservations list modles = ${reservations[0].startDate}');
     return reservations;
   }
 

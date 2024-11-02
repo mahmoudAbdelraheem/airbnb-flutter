@@ -1,28 +1,32 @@
+import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/core/functions/show_bottom_sheet_modal.dart';
 import 'package:airbnb_flutter/core/widgets/custom_button.dart';
 import 'package:airbnb_flutter/data/models/listing_model.dart';
 import 'package:airbnb_flutter/data/models/reservation_model.dart';
+import 'package:airbnb_flutter/logic/home/home_bloc.dart';
 import 'package:airbnb_flutter/logic/reservation/reservation_bloc.dart';
 import 'package:airbnb_flutter/presentation/widgets/details/reserve_sheet_modal_child.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class ReserveWidget extends StatelessWidget {
   final ListingModel listing;
   final List<ReservationModel> reservations;
-  final ReservationBloc reservationBloc;
 
   const ReserveWidget({
     super.key,
     required this.listing,
     required this.reservations,
-    required this.reservationBloc,
   });
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('MMM - dd').format(now);
+    HomeBloc homeBloc = context.read<HomeBloc>();
+    ReservationBloc reservationBloc = context.watch<ReservationBloc>();
+    String formattedDate =
+        DateFormat('MMM - dd').format(reservationBloc.startDate);
+    String formattedEndDate = DateFormat('dd').format(reservationBloc.endDate);
     final Size screenSize = MediaQuery.sizeOf(context);
     return Container(
       width: double.infinity,
@@ -78,7 +82,9 @@ class ReserveWidget extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  formattedDate,
+                  reservationBloc.startDate.day != reservationBloc.endDate.day
+                      ? '$formattedDate - $formattedEndDate'
+                      : formattedDate,
                   style: const TextStyle(
                     decoration: TextDecoration.underline,
                     color: Colors.black,
@@ -92,7 +98,27 @@ class ReserveWidget extends StatelessWidget {
             text: 'Reserve',
             width: 150,
             onTap: () {
-              // Add your reserve logic here
+              if (homeBloc.user == null) {
+                Navigator.pushNamed(
+                  context,
+                  AppConstants.loginScreen,
+                );
+              } else {
+                reservationBloc.add(
+                  AddReservationEvent(
+                    reservation: ReservationModel(
+                      id: '',
+                      authorId: listing.userId,
+                      listingId: listing.id,
+                      userId: homeBloc.user!.uid,
+                      startDate: reservationBloc.startDate,
+                      endDate: reservationBloc.endDate,
+                      createdAt: DateTime.now(),
+                      totalPrice: reservationBloc.totalPrice,
+                    ),
+                  ),
+                );
+              }
             },
           ),
         ],
