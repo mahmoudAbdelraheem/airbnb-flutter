@@ -23,7 +23,7 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    ReservationBloc reservationBloc = BlocProvider.of<ReservationBloc>(context);
+    // ReservationBloc reservationBloc = BlocProvider.of<ReservationBloc>(context);
     return BlocConsumer<DetailsBloc, DetailsState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -37,7 +37,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ? ReserveWidget(
                     listing: widget.listing,
                     reservations: state.reservations,
-                    reservationBloc: reservationBloc,
                   )
                 : const Loading(),
           ),
