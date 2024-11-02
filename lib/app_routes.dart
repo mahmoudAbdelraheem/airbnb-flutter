@@ -5,6 +5,7 @@ import 'package:airbnb_flutter/logic/auth/auth_bloc.dart';
 import 'package:airbnb_flutter/logic/details/details_bloc.dart';
 import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
 import 'package:airbnb_flutter/logic/home/home_bloc.dart';
+import 'package:airbnb_flutter/logic/reservation/reservation_bloc.dart';
 import 'package:airbnb_flutter/presentation/screens/auth/login_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/auth/signup_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/details/details_screen.dart';
@@ -64,6 +65,12 @@ class AppRoutes {
                   create: (context) => serviceLocator<HomeBloc>()
                     ..add(
                       HomeGetCurrentUserEvent(),
+                    ),
+                ),
+                BlocProvider(
+                  create: (context) => serviceLocator<ReservationBloc>()
+                    ..add(
+                      GetReservationsEvent(listingId: data['listing'].id),
                     ),
                 ),
               ],

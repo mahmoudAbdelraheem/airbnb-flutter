@@ -1,6 +1,7 @@
 import 'package:airbnb_flutter/core/widgets/loading.dart';
 import 'package:airbnb_flutter/data/models/listing_model.dart';
 import 'package:airbnb_flutter/logic/details/details_bloc.dart';
+import 'package:airbnb_flutter/logic/reservation/reservation_bloc.dart';
 import 'package:airbnb_flutter/presentation/widgets/details/details_map_widget.dart';
 import 'package:airbnb_flutter/presentation/widgets/details/host_card.dart';
 import 'package:airbnb_flutter/presentation/widgets/details/host_reviews.dart';
@@ -22,6 +23,7 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    ReservationBloc reservationBloc = BlocProvider.of<ReservationBloc>(context);
     return BlocConsumer<DetailsBloc, DetailsState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -30,8 +32,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
         return Scaffold(
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: ReserveWidget(
-            listing: widget.listing,
+          floatingActionButton: BlocBuilder<ReservationBloc, ReservationState>(
+            builder: (context, state) => state is GetReservationsSuccessState
+                ? ReserveWidget(
+                    listing: widget.listing,
+                    reservations: state.reservations,
+                    reservationBloc: reservationBloc,
+                  )
+                : const Loading(),
           ),
           body: ListView(
             children: [

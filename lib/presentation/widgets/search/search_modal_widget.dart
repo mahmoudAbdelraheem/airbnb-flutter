@@ -7,7 +7,6 @@ import 'package:airbnb_flutter/presentation/widgets/search/country_picker_widget
 import 'package:airbnb_flutter/presentation/widgets/search/expandable_section.dart';
 import 'package:airbnb_flutter/presentation/widgets/search/gustes_counter_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_date_pickers/flutter_date_pickers.dart' as dp;
 import 'package:intl/intl.dart';
 
 class SearchModalWidget extends StatefulWidget {
@@ -31,12 +30,6 @@ class _SearchModalWidgetState extends State<SearchModalWidget> {
   // Date selection
   String selectedCheckInDate = '';
   DateTimeRange? selectedDateRange;
-  final DateTime _firstDate = DateTime.now();
-  final DateTime _lastDate = DateTime(DateTime.now().year + 2);
-  final dp.DatePeriod _initialPeriod = dp.DatePeriod(
-    DateTime.now(),
-    DateTime.now(),
-  );
 
   // Guest selection
   final ValueNotifier<int> guestsCounter = ValueNotifier(0);
@@ -171,18 +164,13 @@ class _SearchModalWidgetState extends State<SearchModalWidget> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       CustomDateRangePicker(
-                        firstDate: _firstDate,
-                        lastDate: _lastDate,
-                        initialSelectedPeriod: _initialPeriod,
-                        onDateRangeChanged: (dp.DatePeriod newPeriod) {
-                          // setState(() {
+                        onDateRangeChanged: (DateTimeRange newPeriod) {
                           selectedDateRange = DateTimeRange(
                             start: newPeriod.start,
                             end: newPeriod.end,
                           );
                           selectedCheckInDate =
                               formatDateRange(selectedDateRange!);
-                          // });
                         },
                       ),
                       Align(

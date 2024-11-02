@@ -278,14 +278,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.4.1"
-  flutter_date_pickers:
-    dependency: "direct main"
-    description:
-      name: flutter_date_pickers
-      sha256: "302b1200d8859ec0bfe51c4eaea5f4911d1dbfc3c3f7d256dcf32d99fec219ee"
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.4.3"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -294,11 +286,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.0.0"
-  flutter_localizations:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   flutter_map:
     dependency: "direct main"
     description:
@@ -722,6 +709,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.0"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      sha256: "6a2445aef2adc77136aedaf8b0c1b7f22c43b43d7036f219414db9acd679570a"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "27.1.57"
+  syncfusion_flutter_datepicker:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_datepicker
+      sha256: "69ed9fd90279024284083373120217e713bb0685cd248d84416edc061e73c273"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "27.1.57"
   synchronized:
     dependency: transitive
     description:
