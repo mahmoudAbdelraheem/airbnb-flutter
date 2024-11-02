@@ -1,19 +1,14 @@
-// custom_date_range_picker.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_date_pickers/flutter_date_pickers.dart' as dp;
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class CustomDateRangePicker extends StatefulWidget {
-  final DateTime firstDate;
-  final DateTime lastDate;
-  final dp.DatePeriod initialSelectedPeriod;
-  final ValueChanged<dp.DatePeriod> onDateRangeChanged;
+  final ValueChanged<DateTimeRange> onDateRangeChanged;
+  final List<DateTimeRange> disabledDates;
 
   const CustomDateRangePicker({
     super.key,
-    required this.firstDate,
-    required this.lastDate,
-    required this.initialSelectedPeriod,
     required this.onDateRangeChanged,
+    this.disabledDates = const [],
   });
 
   @override
@@ -21,46 +16,52 @@ class CustomDateRangePicker extends StatefulWidget {
 }
 
 class CustomDateRangePickerState extends State<CustomDateRangePicker> {
-  late dp.DatePeriod _selectedPeriod;
+  final DateTime _firstDate = DateTime.now();
+  final DateTime _lastDate = DateTime(DateTime.now().year + 2);
 
-  @override
-  void initState() {
-    super.initState();
-    _selectedPeriod = widget.initialSelectedPeriod;
+  bool _isDateDisabled(DateTime date) {
+    for (DateTimeRange range in widget.disabledDates) {
+      if (date.isAfter(range.start) && date.isBefore(range.end) ||
+          date.isAtSameMomentAs(range.start) ||
+          date.isAtSameMomentAs(range.end)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    if (args.value is PickerDateRange) {
+      PickerDateRange selectedRange = args.value;
+      if (selectedRange.startDate != null && selectedRange.endDate != null) {
+        if (!_isDateDisabled(selectedRange.startDate!) &&
+            !_isDateDisabled(selectedRange.endDate!)) {
+          widget.onDateRangeChanged(DateTimeRange(
+            start: selectedRange.startDate!,
+            end: selectedRange.endDate!,
+          ));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Selected date range is disabled.')),
+          );
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return dp.RangePicker(
-      selectedPeriod: _selectedPeriod,
-      onChanged: (dp.DatePeriod newPeriod) {
-        setState(() {
-          _selectedPeriod = newPeriod;
-        });
-        widget.onDateRangeChanged(newPeriod);
-      },
-      firstDate: widget.firstDate,
-      lastDate: widget.lastDate,
-      selectableDayPredicate: (date) => true,
-      datePickerStyles: dp.DatePickerRangeStyles(
-        selectedPeriodStartDecoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        selectedPeriodLastDecoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        selectedPeriodMiddleDecoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.4),
-        ),
-        dayHeaderStyle: const dp.DayHeaderStyle(
-          textStyle: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+    return SfDateRangePicker(
+      minDate: _firstDate,
+      maxDate: _lastDate,
+      selectableDayPredicate: (DateTime date) => !_isDateDisabled(date),
+      selectionMode: DateRangePickerSelectionMode.range,
+      onSelectionChanged: _onSelectionChanged,
+      todayHighlightColor: Colors.black,
+      selectionColor: Colors.black,
+      startRangeSelectionColor: Colors.black,
+      endRangeSelectionColor: Colors.black,
+      rangeSelectionColor: Colors.grey,
     );
   }
 }

@@ -16,9 +16,6 @@ class Airbnb extends StatelessWidget {
   const Airbnb._();
   static const Airbnb instance = Airbnb._();
   factory Airbnb() => Airbnb.instance;
-  // late final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  // FirebaseAuth get auth => _auth;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +25,6 @@ class Airbnb extends StatelessWidget {
       theme: AppTheme.lightTheme,
       onGenerateRoute: (settings) => AppRoutes.generateRoute(settings),
       initialRoute: AppConstants.homeScreen,
-      // home:
-      // _auth.currentUser != null ? const HomeScreen() : const LoginScreen(),
     );
   }
 }

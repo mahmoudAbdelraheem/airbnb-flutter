@@ -4,18 +4,20 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
   final double width;
+  final Color backgroundColor;
   const CustomButton({
     super.key,
     required this.text,
     required this.onTap,
     this.width = double.infinity,
+    this.backgroundColor = Colors.pink,
   });
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: onTap,
-      color: Colors.pink[500],
+      color: backgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           8,
