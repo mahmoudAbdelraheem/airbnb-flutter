@@ -25,7 +25,7 @@ class ReserveWidget extends StatelessWidget {
     HomeBloc homeBloc = context.read<HomeBloc>();
     ReservationBloc reservationBloc = context.watch<ReservationBloc>();
     String formattedDate =
-        DateFormat('MMM - dd').format(reservationBloc.startDate);
+        DateFormat('MMM  dd').format(reservationBloc.startDate);
     String formattedEndDate = DateFormat('dd').format(reservationBloc.endDate);
     final Size screenSize = MediaQuery.sizeOf(context);
     return Container(

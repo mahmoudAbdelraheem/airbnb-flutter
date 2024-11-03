@@ -38,8 +38,7 @@ class _SearchModalWidgetState extends State<SearchModalWidget> {
 
   // Helper function to format date range
   String formatDateRange(DateTimeRange range) {
-    final DateFormat formatter = DateFormat('MMM dd');
-    return '${formatter.format(range.start)} - ${formatter.format(range.end)}';
+    return '${DateFormat('MMM  dd').format(range.start)} - ${DateFormat('dd').format(range.end)}';
   }
 
   void toggleSection(String section) {
