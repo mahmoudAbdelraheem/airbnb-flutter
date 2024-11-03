@@ -5,6 +5,7 @@ import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
 import 'package:airbnb_flutter/logic/reservation/reservation_bloc.dart';
 import 'package:airbnb_flutter/presentation/widgets/explore/listing_card.dart';
 import 'package:airbnb_flutter/presentation/widgets/screens_header.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -98,11 +99,34 @@ class _TripsScreenState extends State<TripsScreen> {
                         context.watch<FavoriteBloc>().favoritesIds.contains(
                               state.reservations[index].listingId,
                             );
-
                     return ListingCard(
                       listing: state.reservations[index].listing!,
                       reservation: state.reservations[index],
                       isFavorite: isFavorite,
+                      onReservationCanceled: () {
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.error,
+                          animType: AnimType.rightSlide,
+                          title: 'Cancel reservation',
+                          desc:
+                              'Are you sure you want to cancel this reservation?',
+                          descTextStyle: const TextStyle(
+                            fontSize: 16,
+                          ),
+                          btnCancelColor: Colors.black,
+                          btnOkColor: Colors.pink[500],
+                          btnCancelOnPress: () {},
+                          btnOkOnPress: () {
+                            context.read<ReservationBloc>().add(
+                                  CancelReservationEvent(
+                                    reservationId: state.reservations[index].id,
+                                    userId: homeBloc.user!.uid,
+                                  ),
+                                );
+                          },
+                        ).show();
+                      },
                       onTapFavorite: () {
                         if (isFavorite) {
                           context.read<FavoriteBloc>().add(

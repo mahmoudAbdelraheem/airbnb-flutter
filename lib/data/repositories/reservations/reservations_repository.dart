@@ -5,6 +5,7 @@ abstract class ReservationsRepository {
   Future<List<ReservationModel>> getReservationsByListingId(String id);
   Future<List<ReservationModel>> getReservationsByUserId(String id);
   Future<bool> addNewReservation(ReservationModel reservation);
+  Future<bool> cancleReservation(String reservationId);
 }
 
 class ReservationsRepositoryImp implements ReservationsRepository {
@@ -51,5 +52,10 @@ class ReservationsRepositoryImp implements ReservationsRepository {
     ReservationModel reservation,
   ) async {
     return await reservationsRemoteDatesource.addNewReservation(reservation);
+  }
+
+  @override
+  Future<bool> cancleReservation(String reservationId) async {
+    return await reservationsRemoteDatesource.cancleReservation(reservationId);
   }
 }

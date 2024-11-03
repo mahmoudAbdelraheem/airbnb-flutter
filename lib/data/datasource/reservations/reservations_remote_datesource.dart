@@ -5,6 +5,7 @@ abstract class ReservationsRemoteDatesource {
   Future<List<Map<String, dynamic>>> getReservationsByListingId(String id);
   Future<List<Map<String, dynamic>>> getReservationsByUserId(String id);
   Future<bool> addNewReservation(ReservationModel reservation);
+  Future<bool> cancleReservation(String reservationId);
 }
 
 class ReservationsRemoteDatesourceImp implements ReservationsRemoteDatesource {
@@ -87,6 +88,17 @@ class ReservationsRemoteDatesourceImp implements ReservationsRemoteDatesource {
     } catch (e) {
       print('Error getting reservations by userId: $e');
       return [];
+    }
+  }
+
+  @override
+  Future<bool> cancleReservation(String reservationId) async {
+    try {
+      await firestore.collection('reservations').doc(reservationId).delete();
+      return true;
+    } catch (e) {
+      print('Error deleting reservation: $e');
+      return false;
     }
   }
 }

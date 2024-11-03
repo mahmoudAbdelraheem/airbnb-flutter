@@ -15,6 +15,12 @@ class GetReservationsByUserIdEvent extends ReservationEvent {
   GetReservationsByUserIdEvent({required this.userId});
 }
 
+class CancelReservationEvent extends ReservationEvent {
+  final String reservationId;
+  final String userId;
+  CancelReservationEvent({required this.userId, required this.reservationId});
+}
+
 class AddReservationEvent extends ReservationEvent {
   final ReservationModel reservation;
   AddReservationEvent({required this.reservation});

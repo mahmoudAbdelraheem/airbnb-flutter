@@ -16,6 +16,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
     on<GetReservationsByListingIdEvent>(_getReservationsByListingId);
     on<GetReservationsByUserIdEvent>(_getReservationsByUserId);
     on<AddReservationEvent>(_addNewReservation);
+    on<CancelReservationEvent>(_cancelReservation);
   }
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now();
@@ -85,6 +86,30 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
           reservations: reservations,
         ),
       );
+    } catch (e) {
+      emit(ReservationErrorState(message: e.toString()));
+    }
+  }
+
+  FutureOr<void> _cancelReservation(
+    CancelReservationEvent event,
+    Emitter<ReservationState> emit,
+  ) async {
+    emit(ReservationLoadingState());
+    try {
+      bool result = await reservationsRepository.cancleReservation(
+        event.reservationId,
+      );
+
+      if (result) {
+        add(
+          GetReservationsByUserIdEvent(
+            userId: event.userId,
+          ),
+        );
+      } else {
+        emit(ReservationErrorState(message: "Something went wrong"));
+      }
     } catch (e) {
       emit(ReservationErrorState(message: e.toString()));
     }
