@@ -1,3 +1,4 @@
+import 'package:airbnb_flutter/data/models/listing_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReservationModel {
@@ -9,7 +10,7 @@ class ReservationModel {
   final DateTime endDate;
   final DateTime createdAt;
   final double totalPrice;
-
+  final ListingModel? listing;
   ReservationModel({
     required this.id,
     required this.authorId,
@@ -19,6 +20,7 @@ class ReservationModel {
     required this.endDate,
     required this.createdAt,
     required this.totalPrice,
+    this.listing,
   });
 
   factory ReservationModel.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,9 @@ class ReservationModel {
       endDate: (json['endDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
       createdAt: (json['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
       totalPrice: (json['totalPrice'] as num?)?.toDouble() ?? 0.0,
+      listing: json['listingDetails'] != null
+          ? ListingModel.fromJson(json['listingDetails'])
+          : null,
     );
   }
 

@@ -1,17 +1,21 @@
 import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/data/models/listing_model.dart';
+import 'package:airbnb_flutter/data/models/reservation_model.dart';
 import 'package:airbnb_flutter/presentation/widgets/listing_images_view.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ListingCard extends StatefulWidget {
   final ListingModel listing;
   final bool isFavorite;
   final VoidCallback onTapFavorite;
+  final ReservationModel? reservation;
   const ListingCard({
     super.key,
     required this.listing,
     required this.isFavorite,
     required this.onTapFavorite,
+    this.reservation,
   });
 
   @override
@@ -122,15 +126,18 @@ class _ListingCardState extends State<ListingCard> {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "${widget.listing.price}\$ ",
+                  text: widget.reservation == null
+                      ? "${widget.listing.price}\$ "
+                      : "${widget.reservation!.totalPrice}\$ ",
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                   ),
                 ),
-                const TextSpan(
-                  text: "per night",
-                  style: TextStyle(
+                TextSpan(
+                  text:
+                      widget.reservation == null ? "per night" : "total price",
+                  style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
                   ),
@@ -138,6 +145,24 @@ class _ListingCardState extends State<ListingCard> {
               ],
             ),
           ),
+          if (widget.reservation != null)
+            Container(
+              margin: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.pink[500],
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                "Reserved from ${DateFormat('MMM - dd').format(widget.reservation!.startDate)} to ${DateFormat('dd').format(widget.reservation!.endDate)}",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
         ],
       ),
     );

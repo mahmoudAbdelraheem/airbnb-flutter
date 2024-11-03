@@ -70,7 +70,8 @@ class AppRoutes {
                 BlocProvider(
                   create: (context) => serviceLocator<ReservationBloc>()
                     ..add(
-                      GetReservationsEvent(listingId: data['listing'].id),
+                      GetReservationsByListingIdEvent(
+                          listingId: data['listing'].id),
                     ),
                 ),
               ],
