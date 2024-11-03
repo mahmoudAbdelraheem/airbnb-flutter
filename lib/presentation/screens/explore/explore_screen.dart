@@ -1,6 +1,7 @@
 import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/core/functions/show_bottom_sheet_modal.dart';
 import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
+import 'package:airbnb_flutter/core/widgets/custom_button.dart';
 import 'package:airbnb_flutter/core/widgets/loading.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
 import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
@@ -83,59 +84,91 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ? const SizedBox(height: 150, child: Loading())
                       : const SizedBox(),
               state is GetListingsAndCategoriesSuccessState
-                  ? Expanded(
-                      child: ListView.builder(
-                        itemCount: state.listings.length,
-                        itemBuilder: (context, index) {
-                          bool isFavorite = false;
+                  ? state.listings.isEmpty
+                      ? Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text(
+                                  'No listing found',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                CustomButton(
+                                  text: 'Try again',
+                                  onTap: () {
+                                    exploreBloc.add(
+                                      GetListingsAndCategoriesEvent(),
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: state.listings.length,
+                            itemBuilder: (context, index) {
+                              bool isFavorite = false;
 
-                          isFavorite = context
-                              .watch<FavoriteBloc>()
-                              .favoritesIds
-                              .contains(
-                                state.listings[index].id,
+                              isFavorite = context
+                                  .watch<FavoriteBloc>()
+                                  .favoritesIds
+                                  .contains(
+                                    state.listings[index].id,
+                                  );
+
+                              return ListingCard(
+                                listing: state.listings[index],
+                                isFavorite: isFavorite,
+                                onTapFavorite: () {
+                                  if (homeBloc.user == null) {
+                                    Navigator.pushNamed(
+                                      context,
+                                      AppConstants.loginScreen,
+                                    );
+                                    return;
+                                  }
+                                  if (isFavorite) {
+                                    context.read<FavoriteBloc>().add(
+                                          RemoveFavoriteEvent(
+                                            listingId: state.listings[index].id,
+                                            userId: homeBloc.user!.uid,
+                                          ),
+                                        );
+                                    showCustomSnakeBar(
+                                      context: context,
+                                      message: "Removed from favorites",
+                                    );
+                                  } else {
+                                    context.read<FavoriteBloc>().add(
+                                          AddFavoriteEvent(
+                                            listingId: state.listings[index].id,
+                                            userId: homeBloc.user!.uid,
+                                          ),
+                                        );
+                                    showCustomSnakeBar(
+                                      context: context,
+                                      message: "Added to favorites",
+                                    );
+                                  }
+                                  setState(() {});
+                                },
                               );
-
-                          return ListingCard(
-                            listing: state.listings[index],
-                            isFavorite: isFavorite,
-                            onTapFavorite: () {
-                              if (homeBloc.user == null) {
-                                Navigator.pushNamed(
-                                  context,
-                                  AppConstants.loginScreen,
-                                );
-                                return;
-                              }
-                              if (isFavorite) {
-                                context.read<FavoriteBloc>().add(
-                                      RemoveFavoriteEvent(
-                                        listingId: state.listings[index].id,
-                                        userId: homeBloc.user!.uid,
-                                      ),
-                                    );
-                                showCustomSnakeBar(
-                                  context: context,
-                                  message: "Removed from favorites",
-                                );
-                              } else {
-                                context.read<FavoriteBloc>().add(
-                                      AddFavoriteEvent(
-                                        listingId: state.listings[index].id,
-                                        userId: homeBloc.user!.uid,
-                                      ),
-                                    );
-                                showCustomSnakeBar(
-                                  context: context,
-                                  message: "Added to favorites",
-                                );
-                              }
-                              setState(() {});
                             },
-                          );
-                        },
-                      ),
-                    )
+                          ),
+                        )
                   : State is GetListingsAndCategoriesLoadingState
                       ? const Expanded(child: SizedBox(child: Loading()))
                       : const SizedBox(),

@@ -52,7 +52,7 @@ class Search extends StatelessWidget {
                     Text(
                       '$place . $date . $guest',
                       style: const TextStyle(
-                        fontSize: 12,
+                        fontSize: 11,
                         color: Colors.black45,
                       ),
                     ),

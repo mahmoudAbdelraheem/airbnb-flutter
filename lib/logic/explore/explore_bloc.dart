@@ -71,7 +71,7 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
       );
       placeValue = event.category;
       dateValue =
-          '${DateFormat('MMM - dd').format(event.startDate)} to ${DateFormat('MMM - dd').format(event.endDate)}';
+          '${DateFormat('MMM dd').format(event.startDate)} - ${DateFormat('dd').format(event.endDate)}';
       guestValue = '${event.guestCount} guests';
       emit(
         GetListingsAndCategoriesSuccessState(
