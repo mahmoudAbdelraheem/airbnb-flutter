@@ -13,7 +13,8 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
   ReservationBloc({
     required this.reservationsRepository,
   }) : super(ReservationInitialState()) {
-    on<GetReservationsEvent>(_getReservationsByListingId);
+    on<GetReservationsByListingIdEvent>(_getReservationsByListingId);
+    on<GetReservationsByUserIdEvent>(_getReservationsByUserId);
     on<AddReservationEvent>(_addNewReservation);
   }
   DateTime startDate = DateTime.now();
@@ -25,7 +26,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
 
   List<ReservationModel> reservations = [];
   FutureOr<void> _getReservationsByListingId(
-    GetReservationsEvent event,
+    GetReservationsByListingIdEvent event,
     Emitter<ReservationState> emit,
   ) async {
     try {
@@ -56,7 +57,8 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
       );
       if (result) {
         add(
-          GetReservationsEvent(listingId: event.reservation.listingId),
+          GetReservationsByListingIdEvent(
+              listingId: event.reservation.listingId),
         );
       } else {
         emit(
@@ -65,6 +67,24 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
           ),
         );
       }
+    } catch (e) {
+      emit(ReservationErrorState(message: e.toString()));
+    }
+  }
+
+  FutureOr<void> _getReservationsByUserId(
+    GetReservationsByUserIdEvent event,
+    Emitter<ReservationState> emit,
+  ) async {
+    try {
+      emit(ReservationLoadingState());
+      List<ReservationModel> reservations =
+          await reservationsRepository.getReservationsByUserId(event.userId);
+      emit(
+        GetReservationsSuccessState(
+          reservations: reservations,
+        ),
+      );
     } catch (e) {
       emit(ReservationErrorState(message: e.toString()));
     }

@@ -3,6 +3,7 @@ import 'package:airbnb_flutter/data/models/reservation_model.dart';
 
 abstract class ReservationsRepository {
   Future<List<ReservationModel>> getReservationsByListingId(String id);
+  Future<List<ReservationModel>> getReservationsByUserId(String id);
   Future<bool> addNewReservation(ReservationModel reservation);
 }
 
@@ -18,6 +19,23 @@ class ReservationsRepositoryImp implements ReservationsRepository {
     final reservationsData =
         await reservationsRemoteDatesource.getReservationsByListingId(id);
     print('reservations data for this listing is = $reservationsData');
+
+    List<ReservationModel> reservations = [];
+    reservations = reservationsData
+        .map(
+          (reservation) => ReservationModel.fromJson(reservation),
+        )
+        .toList();
+    return reservations;
+  }
+
+  @override
+  Future<List<ReservationModel>> getReservationsByUserId(
+    String id,
+  ) async {
+    final reservationsData =
+        await reservationsRemoteDatesource.getReservationsByUserId(id);
+    print('reservations data for this user is = $reservationsData');
 
     List<ReservationModel> reservations = [];
     reservations = reservationsData

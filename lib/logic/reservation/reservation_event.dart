@@ -3,10 +3,16 @@ part of 'reservation_bloc.dart';
 @immutable
 sealed class ReservationEvent {}
 
-class GetReservationsEvent extends ReservationEvent {
+class GetReservationsByListingIdEvent extends ReservationEvent {
   final String listingId;
 
-  GetReservationsEvent({required this.listingId});
+  GetReservationsByListingIdEvent({required this.listingId});
+}
+
+class GetReservationsByUserIdEvent extends ReservationEvent {
+  final String userId;
+
+  GetReservationsByUserIdEvent({required this.userId});
 }
 
 class AddReservationEvent extends ReservationEvent {
