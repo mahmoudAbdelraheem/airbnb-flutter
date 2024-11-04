@@ -1,5 +1,5 @@
 import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
-import 'package:airbnb_flutter/core/widgets/loading.dart';
+import 'package:airbnb_flutter/core/widgets/listing_loding.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
 import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
 import 'package:airbnb_flutter/logic/reservation/reservation_bloc.dart';
@@ -74,7 +74,7 @@ class _TripsScreenState extends State<TripsScreen> {
             );
           }
           if (state is ReservationLoadingState) {
-            return const Loading();
+            return const ListingLoading();
           } else if (state is GetReservationsSuccessState) {
             return ListView(
               children: [

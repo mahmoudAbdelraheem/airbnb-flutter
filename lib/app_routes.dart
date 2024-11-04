@@ -11,6 +11,7 @@ import 'package:airbnb_flutter/presentation/screens/auth/signup_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/details/details_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/home_screen.dart';
 import 'package:airbnb_flutter/presentation/screens/map/full_map_screen.dart';
+import 'package:airbnb_flutter/presentation/screens/pesonal_info/personal_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -89,6 +90,19 @@ class AppRoutes {
           builder: (_) {
             return FullMapScreen(
               listingLocation: listingLocation,
+            );
+          },
+        );
+      //! listing pesonal info Screen
+      case AppConstants.pesonalInfoScreen:
+        return MaterialPageRoute(
+          builder: (_) {
+            return BlocProvider(
+              create: (_) => serviceLocator<HomeBloc>()
+                ..add(
+                  HomeGetCurrentUserEvent(),
+                ),
+              child: const PersonalInfoScreen(),
             );
           },
         );

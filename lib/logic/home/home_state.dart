@@ -13,10 +13,14 @@ final class HomeCurrentUserState extends HomeState {
   HomeCurrentUserState({this.user, this.userModel});
 }
 
+final class HomeLogoutSuccessState extends HomeState {}
+
 final class HomeErrorState extends HomeState {
   final String error;
   HomeErrorState({required this.error});
 }
+
+final class HomeUserDataSaveSuccessState extends HomeState {}
 
 final class HomeOnPageChangedState extends HomeState {
   final int pageIndex;

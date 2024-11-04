@@ -4,11 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class UserDataRemoteDatasource {
   Future<Map<String, dynamic>> getUserDataById(String id);
   Future<User?> checkCurrentUserStatus();
+  Future<bool> logout();
+  Future<bool> saveUserData(
+    String id,
+    Map<String, dynamic> userData,
+  );
 }
 
 class UserDataRemoteDatasourceImp implements UserDataRemoteDatasource {
   final FirebaseAuth firebaseAuth;
   final FirebaseFirestore firestore;
+
   const UserDataRemoteDatasourceImp({
     required this.firebaseAuth,
     required this.firestore,
@@ -18,13 +24,7 @@ class UserDataRemoteDatasourceImp implements UserDataRemoteDatasource {
   Future<User?> checkCurrentUserStatus() async {
     try {
       User? user = firebaseAuth.currentUser;
-      if (user != null) {
-        // User is logged in
-        return user;
-      } else {
-        // User is not logged out
-        return null;
-      }
+      return user;
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -41,6 +41,30 @@ class UserDataRemoteDatasourceImp implements UserDataRemoteDatasource {
       }
     } catch (e) {
       throw Exception("Error fetching user data: $e");
+    }
+  }
+
+  @override
+  Future<bool> logout() async {
+    try {
+      await firebaseAuth.signOut();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // New method to save or update user data
+  @override
+  Future<bool> saveUserData(String id, Map<String, dynamic> userData) async {
+    try {
+      await firestore
+          .collection('users')
+          .doc(id)
+          .set(userData, SetOptions(merge: true));
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

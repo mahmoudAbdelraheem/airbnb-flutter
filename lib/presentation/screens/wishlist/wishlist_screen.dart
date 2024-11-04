@@ -1,6 +1,6 @@
 import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
 import 'package:airbnb_flutter/core/widgets/custom_button.dart';
-import 'package:airbnb_flutter/core/widgets/loading.dart';
+import 'package:airbnb_flutter/core/widgets/listing_loding.dart';
 import 'package:airbnb_flutter/data/models/listing_model.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
 import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
@@ -38,7 +38,7 @@ class WishlistScreen extends StatelessWidget {
         },
         builder: (context, state) {
           return state is FavoriteLoadingState
-              ? const Loading()
+              ? const ListingLoading()
               : state is GetFavoritesSuccessState && favorites.isEmpty
                   ? ListView(
                       padding: const EdgeInsets.all(15),

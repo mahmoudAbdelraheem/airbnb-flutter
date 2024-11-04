@@ -5,6 +5,7 @@ class AppConstants {
   static const String registerScreen = '/register';
   static const String detailsScreen = '/details';
   static const String fullMapScreen = '/fullMap';
+  static const String pesonalInfoScreen = '/pesonal_info';
 
   //! search regions
   static List<Map<String, dynamic>> regions = [

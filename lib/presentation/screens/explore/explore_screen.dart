@@ -2,7 +2,8 @@ import 'package:airbnb_flutter/core/constants/app_constants.dart';
 import 'package:airbnb_flutter/core/functions/show_bottom_sheet_modal.dart';
 import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
 import 'package:airbnb_flutter/core/widgets/custom_button.dart';
-import 'package:airbnb_flutter/core/widgets/loading.dart';
+import 'package:airbnb_flutter/core/widgets/explore_screen_loading.dart';
+import 'package:airbnb_flutter/core/widgets/listing_loding.dart';
 import 'package:airbnb_flutter/init_dependancies.dart';
 import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
 import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
@@ -81,7 +82,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         }
                       })
                   : state is GetListingsAndCategoriesLoadingState
-                      ? const SizedBox(height: 150, child: Loading())
+                      ? const Expanded(child: ExploreScreenLoading())
                       : const SizedBox(),
               state is GetListingsAndCategoriesSuccessState
                   ? state.listings.isEmpty
@@ -170,7 +171,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           ),
                         )
                   : State is GetListingsAndCategoriesLoadingState
-                      ? const Expanded(child: SizedBox(child: Loading()))
+                      ? const Expanded(
+                          child: ListingLoading(),
+                        )
                       : const SizedBox(),
             ],
           );
