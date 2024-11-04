@@ -48,7 +48,7 @@ class UserModel {
       'id': id,
       'name': name,
       'email': email,
-      'favoriteIds': favoriteIds,
+      'favoritesIds': favoriteIds,
       'image': image,
       'displayName': displayName,
       'address': address,

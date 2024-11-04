@@ -5,10 +5,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class UserDataRepository {
   Future<UserModel> getUserDataById(String id);
   Future<User?> checkCurrentUserStatus();
+  Future<bool> logout();
+  Future<bool> saveUserData(
+    String id,
+    UserModel userModel,
+  );
 }
 
 class UserDataRepositoryImp implements UserDataRepository {
   final UserDataRemoteDatasource userDataRemoteDatasource;
+
   UserDataRepositoryImp({required this.userDataRemoteDatasource});
 
   @override
@@ -21,10 +27,24 @@ class UserDataRepositoryImp implements UserDataRepository {
     try {
       Map<String, dynamic> userData =
           await userDataRemoteDatasource.getUserDataById(id);
-      UserModel user = UserModel.fromJson(userData);
-      return user;
+      return UserModel.fromJson(userData);
     } catch (e) {
       throw Exception("Error fetching user data: $e");
+    }
+  }
+
+  @override
+  Future<bool> logout() async {
+    return await userDataRemoteDatasource.logout();
+  }
+
+  @override
+  Future<bool> saveUserData(String id, UserModel userModel) async {
+    try {
+      return await userDataRemoteDatasource.saveUserData(
+          id, userModel.toJson());
+    } catch (e) {
+      throw Exception("Error saving user data: $e");
     }
   }
 }

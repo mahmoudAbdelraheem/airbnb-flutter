@@ -16,6 +16,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }) : super(HomeInitialState()) {
     on<HomeGetCurrentUserEvent>(_getCurrentUser);
     on<HomeOnPageChangedEvent>(_onPageChanged);
+    on<HomeLogoutEvent>(_logout);
+    on<SaveUserDataEvent>(_saveUserData);
   }
   User? user;
   UserModel? userModel;
@@ -51,5 +53,36 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) {
     currentPageIndex = event.index;
     emit(HomeOnPageChangedState(pageIndex: currentPageIndex));
+  }
+
+  FutureOr<void> _logout(HomeLogoutEvent event, Emitter<HomeState> emit) async {
+    try {
+      bool result = await userDataRepository.logout();
+      if (result) {
+        emit(HomeLogoutSuccessState());
+      } else {
+        emit(HomeErrorState(error: 'error'));
+      }
+    } catch (e) {
+      emit(HomeErrorState(error: e.toString()));
+    }
+  }
+
+  FutureOr<void> _saveUserData(
+    SaveUserDataEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      emit(HomeLoadingState());
+      bool result = await userDataRepository.saveUserData(
+          event.userModel.id, event.userModel);
+      if (result) {
+        emit(HomeUserDataSaveSuccessState());
+      } else {
+        emit(HomeErrorState(error: 'something went wrong please try agin.'));
+      }
+    } catch (e) {
+      emit(HomeErrorState(error: 'something went wrong please try agin.'));
+    }
   }
 }
