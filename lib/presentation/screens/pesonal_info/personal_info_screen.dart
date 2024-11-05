@@ -1,9 +1,9 @@
-import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
-import 'package:airbnb_flutter/core/widgets/custom_button.dart';
-import 'package:airbnb_flutter/core/widgets/custom_text_form_field.dart';
-import 'package:airbnb_flutter/core/widgets/loading.dart';
-import 'package:airbnb_flutter/data/models/user_model.dart';
-import 'package:airbnb_flutter/logic/home/home_bloc.dart';
+import '../../../core/functions/show_custom_snake_bar.dart';
+import '../../../core/widgets/custom_button.dart';
+import '../../../core/widgets/custom_text_form_field.dart';
+import '../../../core/widgets/loading.dart';
+import '../../../data/models/user_model.dart';
+import '../../../logic/home/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

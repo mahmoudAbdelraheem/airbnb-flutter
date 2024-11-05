@@ -1,9 +1,9 @@
-import 'package:airbnb_flutter/core/constants/app_constants.dart';
-import 'package:airbnb_flutter/logic/home/home_bloc.dart';
-import 'package:airbnb_flutter/presentation/screens/explore/explore_screen.dart';
-import 'package:airbnb_flutter/presentation/screens/profile/profile_screen.dart';
-import 'package:airbnb_flutter/presentation/screens/trips/trips_screen.dart';
-import 'package:airbnb_flutter/presentation/screens/wishlist/wishlist_screen.dart';
+import '../../core/constants/app_constants.dart';
+import '../../logic/home/home_bloc.dart';
+import 'explore/explore_screen.dart';
+import 'profile/profile_screen.dart';
+import 'trips/trips_screen.dart';
+import 'wishlist/wishlist_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

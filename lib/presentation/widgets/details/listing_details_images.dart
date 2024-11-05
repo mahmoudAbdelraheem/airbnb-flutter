@@ -1,6 +1,6 @@
-import 'package:airbnb_flutter/data/models/listing_model.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/listing_details_header.dart';
-import 'package:airbnb_flutter/presentation/widgets/listing_images_view.dart';
+import '../../../data/models/listing_model.dart';
+import 'listing_details_header.dart';
+import '../listing_images_view.dart';
 import 'package:flutter/material.dart';
 
 class ListingDetailsImages extends StatefulWidget {

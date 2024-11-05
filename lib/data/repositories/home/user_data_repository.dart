@@ -1,5 +1,5 @@
-import 'package:airbnb_flutter/data/datasource/home/user_data_remote_datasource.dart';
-import 'package:airbnb_flutter/data/models/user_model.dart';
+import '../../datasource/home/user_data_remote_datasource.dart';
+import '../../models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class UserDataRepository {

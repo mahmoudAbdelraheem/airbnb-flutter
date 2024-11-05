@@ -1,7 +1,7 @@
-import 'package:airbnb_flutter/app_routes.dart';
-import 'package:airbnb_flutter/core/constants/app_constants.dart';
-import 'package:airbnb_flutter/core/theme/app_theme.dart';
-import 'package:airbnb_flutter/init_dependancies.dart';
+import 'app_routes.dart';
+import 'core/constants/app_constants.dart';
+import 'core/theme/app_theme.dart';
+import 'init_dependancies.dart';
 import 'package:flutter/material.dart';
 
 void main() async {

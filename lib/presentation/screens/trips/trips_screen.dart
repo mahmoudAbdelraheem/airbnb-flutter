@@ -1,10 +1,10 @@
-import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
-import 'package:airbnb_flutter/core/widgets/listing_loding.dart';
-import 'package:airbnb_flutter/init_dependancies.dart';
-import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
-import 'package:airbnb_flutter/logic/reservation/reservation_bloc.dart';
-import 'package:airbnb_flutter/presentation/widgets/explore/listing_card.dart';
-import 'package:airbnb_flutter/presentation/widgets/screens_header.dart';
+import '../../../core/functions/show_custom_snake_bar.dart';
+import '../../../core/widgets/listing_loding.dart';
+import '../../../init_dependancies.dart';
+import '../../../logic/favorite/favorite_bloc.dart';
+import '../../../logic/reservation/reservation_bloc.dart';
+import '../../widgets/explore/listing_card.dart';
+import '../../widgets/screens_header.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

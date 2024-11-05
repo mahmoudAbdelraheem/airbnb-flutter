@@ -1,5 +1,5 @@
-import 'package:airbnb_flutter/data/datasource/search/search_remote_datesource.dart';
-import 'package:airbnb_flutter/data/models/listing_model.dart';
+import '../../datasource/search/search_remote_datesource.dart';
+import '../../models/listing_model.dart';
 
 abstract class SearchRepository {
   Future<List<ListingModel>> getSearchResults({

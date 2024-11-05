@@ -1,4 +1,4 @@
-import 'package:airbnb_flutter/core/constants/app_colors.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class RoundTextField extends StatelessWidget {

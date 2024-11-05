@@ -1,6 +1,6 @@
-import 'package:airbnb_flutter/data/models/category_model.dart';
-import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
-import 'package:airbnb_flutter/presentation/widgets/explore/category.dart';
+import '../../../data/models/category_model.dart';
+import '../../../logic/explore/explore_bloc.dart';
+import 'category.dart';
 import 'package:flutter/material.dart';
 
 class Categoties extends StatefulWidget {

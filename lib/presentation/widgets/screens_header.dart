@@ -1,5 +1,5 @@
-import 'package:airbnb_flutter/core/constants/app_constants.dart';
-import 'package:airbnb_flutter/core/widgets/custom_button.dart';
+import '../../core/constants/app_constants.dart';
+import '../../core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class ScreensHeader extends StatelessWidget {

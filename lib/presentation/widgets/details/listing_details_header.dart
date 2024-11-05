@@ -1,8 +1,8 @@
-import 'package:airbnb_flutter/core/constants/app_constants.dart';
-import 'package:airbnb_flutter/core/functions/show_custom_snake_bar.dart';
-import 'package:airbnb_flutter/core/widgets/my_icon.dart';
-import 'package:airbnb_flutter/logic/favorite/favorite_bloc.dart';
-import 'package:airbnb_flutter/logic/home/home_bloc.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/functions/show_custom_snake_bar.dart';
+import '../../../core/widgets/my_icon.dart';
+import '../../../logic/favorite/favorite_bloc.dart';
+import '../../../logic/home/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

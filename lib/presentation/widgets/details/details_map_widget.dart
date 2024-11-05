@@ -1,5 +1,5 @@
-import 'package:airbnb_flutter/core/constants/app_constants.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/listing_map.dart';
+import '../../../core/constants/app_constants.dart';
+import 'listing_map.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 

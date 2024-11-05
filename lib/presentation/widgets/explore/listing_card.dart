@@ -1,8 +1,8 @@
-import 'package:airbnb_flutter/core/constants/app_constants.dart';
-import 'package:airbnb_flutter/core/widgets/custom_button.dart';
-import 'package:airbnb_flutter/data/models/listing_model.dart';
-import 'package:airbnb_flutter/data/models/reservation_model.dart';
-import 'package:airbnb_flutter/presentation/widgets/listing_images_view.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/widgets/custom_button.dart';
+import '../../../data/models/listing_model.dart';
+import '../../../data/models/reservation_model.dart';
+import '../listing_images_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

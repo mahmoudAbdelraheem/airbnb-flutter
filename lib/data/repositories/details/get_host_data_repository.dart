@@ -1,6 +1,6 @@
-import 'package:airbnb_flutter/data/datasource/details/get_host_data_remote_datasource.dart';
-import 'package:airbnb_flutter/data/models/review_model.dart';
-import 'package:airbnb_flutter/data/models/user_model.dart';
+import '../../datasource/details/get_host_data_remote_datasource.dart';
+import '../../models/review_model.dart';
+import '../../models/user_model.dart';
 
 abstract class GetHostDataRepository {
   Future<UserModel> getHostDataById(String id);

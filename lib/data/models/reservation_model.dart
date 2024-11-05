@@ -1,4 +1,4 @@
-import 'package:airbnb_flutter/data/models/listing_model.dart';
+import 'listing_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReservationModel {

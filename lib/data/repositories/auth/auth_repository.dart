@@ -1,4 +1,4 @@
-import 'package:airbnb_flutter/data/datasource/auth/auth_remote_datasource.dart';
+import '../../datasource/auth/auth_remote_datasource.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepository {

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:airbnb_flutter/data/models/listing_model.dart';
-import 'package:airbnb_flutter/data/repositories/favorites/favorite_repository.dart';
+import '../../data/models/listing_model.dart';
+import '../../data/repositories/favorites/favorite_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,7 +1,7 @@
-import 'package:airbnb_flutter/core/widgets/custom_button.dart';
-import 'package:airbnb_flutter/data/models/reservation_model.dart';
-import 'package:airbnb_flutter/logic/reservation/reservation_bloc.dart';
-import 'package:airbnb_flutter/presentation/widgets/custom_date_range_picker.dart';
+import '../../../core/widgets/custom_button.dart';
+import '../../../data/models/reservation_model.dart';
+import '../../../logic/reservation/reservation_bloc.dart';
+import '../custom_date_range_picker.dart';
 import 'package:flutter/material.dart';
 
 class ReserveSheetModalChild extends StatefulWidget {

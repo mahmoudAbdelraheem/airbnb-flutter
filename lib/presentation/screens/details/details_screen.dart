@@ -1,12 +1,12 @@
-import 'package:airbnb_flutter/core/widgets/loading.dart';
-import 'package:airbnb_flutter/data/models/listing_model.dart';
-import 'package:airbnb_flutter/logic/details/details_bloc.dart';
-import 'package:airbnb_flutter/logic/reservation/reservation_bloc.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/details_map_widget.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/host_card.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/host_reviews.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/listing_details_images.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/reserve_widget.dart';
+import '../../../core/widgets/loading.dart';
+import '../../../data/models/listing_model.dart';
+import '../../../logic/details/details_bloc.dart';
+import '../../../logic/reservation/reservation_bloc.dart';
+import '../../widgets/details/details_map_widget.dart';
+import '../../widgets/details/host_card.dart';
+import '../../widgets/details/host_reviews.dart';
+import '../../widgets/details/listing_details_images.dart';
+import '../../widgets/details/reserve_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

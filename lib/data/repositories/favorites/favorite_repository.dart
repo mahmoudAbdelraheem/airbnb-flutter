@@ -1,6 +1,6 @@
-import 'package:airbnb_flutter/data/datasource/favorites/favorite_remote_datasource.dart';
-import 'package:airbnb_flutter/data/models/listing_model.dart';
-import 'package:airbnb_flutter/data/models/user_model.dart';
+import '../../datasource/favorites/favorite_remote_datasource.dart';
+import '../../models/listing_model.dart';
+import '../../models/user_model.dart';
 
 abstract class FavoriteRepository {
   Future<bool> removeFromFavorites(String id, String userId);

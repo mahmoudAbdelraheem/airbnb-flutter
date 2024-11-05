@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:airbnb_flutter/data/models/user_model.dart';
-import 'package:airbnb_flutter/data/repositories/home/user_data_repository.dart';
+import '../../data/models/user_model.dart';
+import '../../data/repositories/home/user_data_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

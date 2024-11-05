@@ -1,4 +1,4 @@
-import 'package:airbnb_flutter/data/models/reservation_model.dart';
+import '../../models/reservation_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class ReservationsRemoteDatesource {

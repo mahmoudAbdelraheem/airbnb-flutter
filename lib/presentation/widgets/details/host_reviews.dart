@@ -1,5 +1,5 @@
-import 'package:airbnb_flutter/data/models/review_model.dart';
-import 'package:airbnb_flutter/presentation/widgets/details/review_widget.dart';
+import '../../../data/models/review_model.dart';
+import 'review_widget.dart';
 import 'package:flutter/material.dart';
 
 class HostReviews extends StatelessWidget {

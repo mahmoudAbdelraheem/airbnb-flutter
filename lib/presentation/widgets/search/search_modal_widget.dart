@@ -1,11 +1,11 @@
-import 'package:airbnb_flutter/core/constants/app_constants.dart';
-import 'package:airbnb_flutter/core/widgets/custom_button.dart';
-import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
-import 'package:airbnb_flutter/presentation/widgets/custom_date_range_picker.dart';
-import 'package:airbnb_flutter/presentation/widgets/search/bottom_actions.dart';
-import 'package:airbnb_flutter/presentation/widgets/search/country_picker_widget.dart';
-import 'package:airbnb_flutter/presentation/widgets/search/expandable_section.dart';
-import 'package:airbnb_flutter/presentation/widgets/search/gustes_counter_widget.dart';
+import '../../../core/constants/app_constants.dart';
+import '../../../core/widgets/custom_button.dart';
+import '../../../logic/explore/explore_bloc.dart';
+import '../custom_date_range_picker.dart';
+import 'bottom_actions.dart';
+import 'country_picker_widget.dart';
+import 'expandable_section.dart';
+import 'gustes_counter_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

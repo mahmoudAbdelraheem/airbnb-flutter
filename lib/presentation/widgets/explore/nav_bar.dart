@@ -1,7 +1,7 @@
-import 'package:airbnb_flutter/data/models/category_model.dart';
-import 'package:airbnb_flutter/logic/explore/explore_bloc.dart';
-import 'package:airbnb_flutter/presentation/widgets/explore/categories.dart';
-import 'package:airbnb_flutter/presentation/widgets/explore/search.dart';
+import '../../../data/models/category_model.dart';
+import '../../../logic/explore/explore_bloc.dart';
+import 'categories.dart';
+import 'search.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {

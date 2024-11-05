@@ -1,5 +1,5 @@
-import 'package:airbnb_flutter/data/datasource/explore/get_categories_remote_datasource.dart';
-import 'package:airbnb_flutter/data/models/category_model.dart';
+import '../../datasource/explore/get_categories_remote_datasource.dart';
+import '../../models/category_model.dart';
 
 abstract class GetCategotiesRepository {
   Future<List<CategoryModel>> getCategories();

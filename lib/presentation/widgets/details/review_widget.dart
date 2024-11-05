@@ -1,5 +1,5 @@
-import 'package:airbnb_flutter/core/classes/time_ago.dart';
-import 'package:airbnb_flutter/data/models/review_model.dart';
+import '../../../core/classes/time_ago.dart';
+import '../../../data/models/review_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'package:flutter/material.dart';

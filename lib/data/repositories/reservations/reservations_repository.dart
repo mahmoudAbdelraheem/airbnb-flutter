@@ -1,5 +1,5 @@
-import 'package:airbnb_flutter/data/datasource/reservations/reservations_remote_datesource.dart';
-import 'package:airbnb_flutter/data/models/reservation_model.dart';
+import '../../datasource/reservations/reservations_remote_datesource.dart';
+import '../../models/reservation_model.dart';
 
 abstract class ReservationsRepository {
   Future<List<ReservationModel>> getReservationsByListingId(String id);
