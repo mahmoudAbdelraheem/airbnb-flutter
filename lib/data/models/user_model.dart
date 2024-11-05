@@ -36,8 +36,8 @@ class UserModel {
       displayName: json['displayName'],
       address: json['address'],
       emergencyContact: json['emergencyContact'],
-      governmentId: json['governmentId'],
-      phoneNumber: json['phoneNumber'],
+      governmentId: json['governmentID'],
+      phoneNumber: json['phoneNumbers'],
       preferredName: json['preferredName'],
     );
   }
@@ -53,8 +53,8 @@ class UserModel {
       'displayName': displayName,
       'address': address,
       'emergencyContact': emergencyContact,
-      'governmentId': governmentId,
-      'phoneNumber': phoneNumber,
+      'governmentID': governmentId,
+      'phoneNumbers': phoneNumber,
       'preferredName': preferredName,
     };
   }

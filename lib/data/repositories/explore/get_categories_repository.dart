@@ -22,7 +22,6 @@ class GetCategotiesRepositoryImp implements GetCategotiesRepository {
       }).toList();
       return listings;
     } catch (e) {
-      print('Error fetching and converting categories: $e');
       return [];
     }
   }

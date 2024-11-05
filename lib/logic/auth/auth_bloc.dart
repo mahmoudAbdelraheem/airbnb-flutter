@@ -27,7 +27,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
       );
-      print("======loggedin======current user data is $User");
       emit(AuthLoggedInState());
     } catch (e) {
       emit(AuthErrorState(error: e.toString()));
@@ -44,7 +43,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         password: event.password,
         name: event.name,
       );
-      print("======signup======current user data is $User");
       emit(AuthSignedUpState());
     } catch (e) {
       emit(AuthErrorState(error: e.toString()));

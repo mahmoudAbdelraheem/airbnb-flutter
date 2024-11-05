@@ -23,7 +23,6 @@ class GetListingsRemoteDatasourceImp implements GetListingsRemoteDatasource {
 
       return listings;
     } catch (e) {
-      print('Error fetching approved listings: $e');
       return [];
     }
   }

@@ -63,7 +63,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ],
             ),
-
           if (homeBloc.user != null)
             InkWell(
               onTap: () {
@@ -118,7 +117,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             ),
-
           const SizedBox(height: 20),
           ProfileBottonsBar(
             onPressed: () {},
@@ -150,18 +148,14 @@ class ProfileScreen extends StatelessWidget {
             prefixIcon: Icons.menu_book_rounded,
             lable: 'Open Source Licenses',
           ),
-          LogOutWidget(
-            onPressed: () {
-              homeBloc.add(
-                HomeLogoutEvent(),
-              );
-            },
-          ),
-          // Navigator.pushNamedAndRemoveUntil(
-          //   context,
-          //   AppConstants.homeScreen,
-          //   (route) => false,
-          // );
+          if (homeBloc.user != null)
+            LogOutWidget(
+              onPressed: () {
+                homeBloc.add(
+                  HomeLogoutEvent(),
+                );
+              },
+            ),
           const Text(
             'Version 1.0.0',
           ),

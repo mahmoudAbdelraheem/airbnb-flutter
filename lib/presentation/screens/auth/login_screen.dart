@@ -42,6 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           } else if (state is AuthErrorState) {
             showCustomSnakeBar(context: context, message: state.error);
+            print('========================================');
+            print('error: ${state.error}');
           }
         },
         builder: (context, state) {
@@ -181,13 +183,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       },
                     ),
-                    CustomAuthButton(
-                      imagePath: 'assets/images/github.png',
-                      bottonText: 'Continue with Github',
-                      onPressed: () {
-                        //TODO: login with github account
-                      },
-                    ),
+                    // CustomAuthButton(
+                    //   imagePath: 'assets/images/github.png',
+                    //   bottonText: 'Continue with Github',
+                    //   onPressed: () {
+                    //     //TODO: login with github account
+                    //   },
+                    // ),
                   ],
                 ),
               ),
