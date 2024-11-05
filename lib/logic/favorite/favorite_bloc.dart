@@ -28,7 +28,6 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
       favorites = await favoriteRepository.getFavoritesByUserId(event.userId!);
       favoritesIds = favorites.map((listing) => listing.id).toList();
-      print('favorites ids is = $favoritesIds');
       emit(
         GetFavoritesSuccessState(
           favoriteListings: favorites,

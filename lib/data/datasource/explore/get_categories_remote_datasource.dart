@@ -29,7 +29,6 @@ class GetCategoriesRemoteDatasourceImp
 
       return categories;
     } catch (e) {
-      print('Error fetching categories: $e');
       return [];
     }
   }

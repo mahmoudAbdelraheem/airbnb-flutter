@@ -24,7 +24,6 @@ class GetListingsRepositoryImp implements GetListingsRepository {
 
       return listings;
     } catch (e) {
-      print('Error fetching and converting listings: $e');
       return [];
     }
   }

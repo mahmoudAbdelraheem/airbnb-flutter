@@ -197,13 +197,13 @@ class _SignupScreenState extends State<SignupScreen> {
                         );
                       },
                     ),
-                    CustomAuthButton(
-                      imagePath: 'assets/images/github.png',
-                      bottonText: 'Continue with Github',
-                      onPressed: () {
-                        //TODO: login with github account
-                      },
-                    ),
+                    // CustomAuthButton(
+                    //   imagePath: 'assets/images/github.png',
+                    //   bottonText: 'Continue with Github',
+                    //   onPressed: () {
+                    //     //TODO: login with github account
+                    //   },
+                    // ),
                   ],
                 ),
               ),

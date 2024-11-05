@@ -1,7 +1,7 @@
-import 'package:airbnb_flutter/core/widgets/loading.dart';
 import 'package:airbnb_flutter/data/models/category_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Category extends StatelessWidget {
   final CategoryModel category;
@@ -45,7 +45,18 @@ class Category extends StatelessWidget {
                 isSelected ? Colors.black : Colors.grey.shade700,
                 BlendMode.srcIn,
               ),
-              placeholderBuilder: (context) => const Loading(),
+              placeholderBuilder: (context) => Shimmer.fromColors(
+                baseColor: const Color.fromARGB(255, 194, 184, 184),
+                highlightColor: Colors.grey[300]!,
+                child: Container(
+                  height: 45,
+                  width: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.black38,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
             ),
             Text(category.label),
           ],

@@ -19,7 +19,6 @@ class ReservationsRemoteDatesourceImp implements ReservationsRemoteDatesource {
       await firestore.collection('reservations').add(reservation.toJson());
       return true;
     } catch (e) {
-      print('Error adding reservation: $e');
       return false;
     }
   }
@@ -39,7 +38,6 @@ class ReservationsRemoteDatesourceImp implements ReservationsRemoteDatesource {
         return data;
       }).toList();
     } catch (e) {
-      print('Error getting reservations by listingId: $e');
       return [];
     }
   }
@@ -86,7 +84,6 @@ class ReservationsRemoteDatesourceImp implements ReservationsRemoteDatesource {
 
       return reservationsWithListings;
     } catch (e) {
-      print('Error getting reservations by userId: $e');
       return [];
     }
   }
@@ -97,7 +94,6 @@ class ReservationsRemoteDatesourceImp implements ReservationsRemoteDatesource {
       await firestore.collection('reservations').doc(reservationId).delete();
       return true;
     } catch (e) {
-      print('Error deleting reservation: $e');
       return false;
     }
   }

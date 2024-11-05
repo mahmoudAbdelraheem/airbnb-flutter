@@ -19,7 +19,6 @@ class ReservationsRepositoryImp implements ReservationsRepository {
   ) async {
     final reservationsData =
         await reservationsRemoteDatesource.getReservationsByListingId(id);
-    print('reservations data for this listing is = $reservationsData');
 
     List<ReservationModel> reservations = [];
     reservations = reservationsData
@@ -36,7 +35,6 @@ class ReservationsRepositoryImp implements ReservationsRepository {
   ) async {
     final reservationsData =
         await reservationsRemoteDatesource.getReservationsByUserId(id);
-    print('reservations data for this user is = $reservationsData');
 
     List<ReservationModel> reservations = [];
     reservations = reservationsData

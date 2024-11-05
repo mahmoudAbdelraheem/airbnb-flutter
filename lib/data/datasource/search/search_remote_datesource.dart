@@ -66,7 +66,6 @@ class SearchRemoteDatesourceImp implements SearchRemoteDatesource {
           .map((doc) => {'id': doc.id, ...doc.data() as Map<String, dynamic>})
           .toList();
 
-      print("Available listings: $availableListings");
       return availableListings;
     } catch (error) {
       throw Exception("Error fetching available listings: $error");

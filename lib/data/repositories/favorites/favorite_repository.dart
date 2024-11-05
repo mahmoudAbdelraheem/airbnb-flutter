@@ -36,7 +36,6 @@ class FavoriteRepositoryImp implements FavoriteRepository {
 
       return listings;
     } catch (e) {
-      print('Error fetching and converting listings: $e');
       return [];
     }
   }

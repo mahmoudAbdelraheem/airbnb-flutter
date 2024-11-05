@@ -29,16 +29,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       emit(HomeLoadingState());
       user = await userDataRepository.checkCurrentUserStatus();
-      print("===========================================");
-      print("user is $user");
-      print("===========================================");
       if (user != null) {
         userModel = await userDataRepository.getUserDataById(user!.uid);
 
-        print("===========================================");
-        print("user model is ${userModel!.favoriteIds}");
-        print("user model is ${userModel!.email}");
-        print("===========================================");
         emit(HomeCurrentUserState(user: user, userModel: userModel));
       }
       emit(HomeCurrentUserState(user: user));
