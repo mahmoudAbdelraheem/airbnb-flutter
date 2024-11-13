@@ -27,7 +27,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
 final serviceLocator = GetIt.instance;
-
+//test git 
 Future<void> initDependancies() async {
   //! Firebase initialization
   await Firebase.initializeApp(
